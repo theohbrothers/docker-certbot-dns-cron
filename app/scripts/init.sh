@@ -11,7 +11,7 @@ LETSENCRYPT_DIR=/etc/letsencrypt
 
 [ -n "$DEBUG" ] #&& set -x && set -u
 
-STAGING=${STAGING:-1}
+STAGING=${STAGING:-}
 
 # Get endpoint
 ENDPOINT='https://acme-v02.api.letsencrypt.org/directory'
@@ -37,8 +37,10 @@ if [ ! -z "$PLUGIN_DNS_PROVIDER" ]; then
     [ ! -f "$PLUGIN_DNS_CREDENTIALS_FILE" ] && error "Certbot plugin credential file in \$PLUGIN_DNS_CREDENTIALS_FILE variable of value '$PLUGIN_DNS_CREDENTIALS_FILE' does not point to a file!"
 fi
 
+DEPLOY_CERTS=${DEPLOY_CERTS:-}
+
 # Get the email variables
-EMAIL_REPORT=${EMAIL_REPORT:-1}
+EMAIL_REPORT=${EMAIL_REPORT:-}
 if [ -n "$EMAIL_REPORT" ]; then
     SMTP_FROM=$(  ( [ -n "$EMAIL_FROM" ] && echo "$EMAIL_FROM" ) || ( [ -n "$EMAIL_FROM_FILE" ] && cat "$EMAIL_FROM_FILE" )  2>/dev/null  )
     SMTP_TO=$(  ( [ -n "$EMAIL_TO" ] && echo "$EMAIL_TO" ) || ( [ -n "$EMAIL_TO_FILE" ] && cat "$EMAIL_TO_FILE" )  2>/dev/null  )
