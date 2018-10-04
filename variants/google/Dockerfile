@@ -15,5 +15,4 @@ STOPSIGNAL SIGKILL
 
 WORKDIR /app
 
-ENTRYPOINT ["/docker-entrypoint.sh"]
 CMD ["crond", "-f"]
