@@ -53,7 +53,7 @@ do
                     # Get container name from env var, escaping regex special chars. Typically not needed, but needed only for complex names
                     target_container_name_regex_escaped=$(     [ -n "$TARGET_CONTAINER_NAME" ] && echo "$TARGET_CONTAINER_NAME" | sed 's/\([(){}+*?.^$<>=|]\)/\\\1/g' | sed 's/\(\[\)/\\\1/g' | sed 's/\(\]\)/\\\1/g'     ||     echo "docker-gen"      )
                     sed_capture=$( cat - <<EOF
-s/.*"Id":"([0-9a-f]+)","Names":\["\/$target_container_name_regex_escaped"\].*/\1/g
+s/.*"Id":"([0-9a-f]+)","Names":\["\/$target_container_name_regex_escaped[^"]*"\].*/\1/g
 EOF
 )
                     target_container_id=$( echo -e "GET /containers/json HTTP/1.0\r\n" | nc local:/tmp/docker.sock | sed -r "$sed_capture" | grep -E '^[0-9a-f]+$' )
