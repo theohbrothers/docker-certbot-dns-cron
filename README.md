@@ -2,9 +2,9 @@
 
 Dockerized [Certbot with DNS Plugins](https://certbot.eff.org/docs/using.html#dns-plugins), with cron, deploy, email alert capabilities.
 
-It signs wildcards certificates for domains. For instance, the obtained certificate for `example.com` would would be: `example.com, *.example.com`.
+It signs wildcards certificates for domains. For instance, the DNS Names for an obtained certificate for `example.com` would be: `example.com, *.example.com`.
 
-All Certbot plugins are supported: `cloudflare`,`cloudxns`,`digitalocean`,`dnsimple`,`dnsmadeeasy`,`google`,`linode`,`luadns`,`nsone`,`ovh`,`rfc2136`,`route53`
+All Certbot plugins are supported: `cloudflare`, `cloudxns`, `digitalocean`, `dnsimple`, `dnsmadeeasy`, `google`, `linode`, `luadns`, `nsone`, `ovh`, `rfc2136`, `route53`
 
 ## Variants
 
@@ -38,7 +38,7 @@ Environment variables are used to control various steps of the automation proces
 | `DOMAINS` | `""` | Domains (delimited by ';' ) | `--domains`, `-d`
 | `DOMAINS_FILE` | `4096` | Same as `DOMAINS`, but this should point to a file. Domains should be delimited by "\n". Useful when using secrets. | `--domains`, `-d`
 | `DOMAIN_ADMIN_EMAIL_LOCALPART` | `admin` | Admin Email's Local-part for LetsEncrypt expiry-notification emails. The final email will be `<DOMAIN_ADMIN_EMAIL_LOCALPART>@domain.com` | `--email`, `-m`
-| `PLUGIN_DNS_PROVIDER` | `""` | DNS Provider. Valid values are: `cloudflare`,`cloudxns`,`digitalocean`,`dnsimple`,`dnsmadeeasy`,`google`,`linode`,`luadns`,`nsone`,`ovh`,`rfc2136`,`route53`  | `--dns-<PLUGIN_DNS_PROVIDER>`
+| `PLUGIN_DNS_PROVIDER` | `""` | DNS Provider. Valid values are: `cloudflare`, `cloudxns`, `digitalocean`, `dnsimple`, `dnsmadeeasy`, `google`, `linode`, `luadns`, `nsone`, `ovh`, `rfc2136`, `route53`  | `--dns-<PLUGIN_DNS_PROVIDER>`
 | `PLUGIN_DNS_CREDENTIALS_FILE` | `""` | Path to the dns credentials file | `--dns-<PLUGIN_DNS_PROVIDER>-credentials`.
 | `PLUGIN_DNS_PROPAGATION_SECONDS` | certbot plugin default, check plugin documentation | The number of seconds to wait for DNS to propagate before asking the ACME server to verify the DNS record. | `--dns-<PLUGIN_DNS_PROVIDER>-propagation-seconds`.
 
@@ -46,19 +46,19 @@ Environment variables are used to control various steps of the automation proces
 
 | Name | Default value | Description |
 |:-------:|:---------------:|:---------:|
-| `DEPLOY_CERTS` | `` | Whether to deploy the sign cert and key. This copies `/etc/lastencrypt/live/<domain>/privkey.pem` as `<domain>.key`, and `/etc/lastencrypt/live/<domain>/cert.pem` as `<domain>.crt`. Omit environment variable to disable deploy
+| `DEPLOY_CERTS` | `""` | Whether to deploy the sign cert and key. This copies `/etc/letsencrypt/live/<domain>/privkey.pem` as `<domain>.key`, and `/etc/letsencrypt/live/<domain>/cert.pem` as `<domain>.crt`. Omit environment variable to disable deploy
 
 ### 3. Reload
 
 | Name | Default value | Description |
 |:-------:|:---------------:|:---------:|
-| `TARGET_CONTAINER_NAME` | `nginx-proxy-docker-gen` | Container name to reload (with SIGHUP) after signing and obtaining cert. Omit environment variable to disable reload
+| `TARGET_CONTAINER_NAME` | `""` | Container name to reload (with SIGHUP) after signing and obtaining cert. Omit environment variable to disable reload
 
 ### 4. Report Emailing
 
 | Name | Default value | Description |
 |:-------:|:---------------:|:---------:|
-| `EMAIL_REPORT` | `` | Whether to email the summary report on successful cert-signing, deployment, and reloading of target container. Omit environment variable to disable email
+| `EMAIL_REPORT` | `""` | Whether to email the summary report on successful cert-signing, deployment, and reloading of target container. Omit environment variable to disable email
 | `EMAIL_FROM` | `""` | Email sender address
 | `EMAIL_TO` | `""` | Email receipient address
 | `EMAIL_USER` | `""` | SMTP sender account user
@@ -68,13 +68,13 @@ Environment variables are used to control various steps of the automation proces
 
 #### If using Swarm Secrets
 
-Instead of writing your email credentials in the docker-compose.yml, use specific environment variables that point to each Swarm Secrets mountpoints `/run/secret_file`. These files will be read to obtain the email credentials.
+Instead of writing your email credentials in the `docker-compose.yml`, use specific environment variables that point to each Swarm Secrets mountpoints `/run/secrets/secret_file`. These files will be read to obtain the email credentials.
 
-> Note: Change the Secret Environment Variables to point to your secret name. E.g. if the name of your secret is `my_secret_password`, use the value `/run/my_secret_password` for `EMAIL_PASSWORD_FILE`
+> Note: Change the Secret Environment Variables to point to your secret name. E.g. if the name of your secret is `my_secret_password`, use the value `/run/secrets/my_secret_password` for `EMAIL_PASSWORD_FILE`
 
 | Name | Default value | Description |
 |:-------:|:---------------:|:---------:|
-| `EMAIL_FROM_FILE` | `/run/secrets/certbot_email_from` | Email sender address.
+| `EMAIL_FROM_FILE` | `/run/secrets/certbot_email_from` | Email sender address
 | `EMAIL_TO_FILE` | `/run/secrets/certbot_email_to` | Email receipient address
 | `EMAIL_USER_FILE` | `/run/secrets/certbot_email_user` | SMTP sender account user
 | `EMAIL_PASSWORD_FILE` | `/run/secrets/certbot_email_password` | SMTP sender account password
@@ -86,7 +86,9 @@ Instead of writing your email credentials in the docker-compose.yml, use specifi
 ## Examples
 
 ### Not using Swarm Secrets
-This example signs the cert only. Two certificates will be obtained:
+
+This example signs 2 wildcard certificates, one certificate for `exmaple.com`, and one for `ns.example.com` :
+
 1. `example.com`, `*.example.com`
 2. `ns.example.com`, `*.ns.example.com`
 
@@ -115,11 +117,12 @@ dns_cloudflare_api_key = 0123456789abcdef0123456789abcdef01234567
 
 ### Using Swarm Secrets
 
-This example signs the cert only. Two certificates will be obtained:
+This example signs 2 wildcard certificates, one certificate for `exmaple.com`, and one for `ns.example.com` :
+
 1. `example.com`, `*.example.com`
 2. `ns.example.com`, `*.ns.example.com`
 
-Notification emails will be sent to: `admin@example.com`
+LetsEncrypt expiry notification emails will be sent to: `admin@example.com`
 
 ```sh
 docker service create --name certbot-dns-cron \
@@ -153,13 +156,14 @@ ns.example.com
 
 ### Full Example (Using Swarm Secrets)
 
-This example will sign, deploy certs, reload a target container, and email the automation report for one or more signed / renewed cert. Four certificates will be obtained:
+This example will sign, deploy certs, reload a target container, and email a summary report about the success of those tasks. Four wildcard certificates will be obtained:
+
 1. `example.com`, `*.example.com`
 2. `ns.example.com`, `*.ns.example.com`
 2. `example2.com`, `*.example2.com`
 2. `ns.example2.com`, `*.ns.example2.com`
 
-Notification emails will be sent to: `admin@example.com` and `admin@example2.com`
+LetsEncrypt expiry notification emails will be sent to: `admin@example.com`
 
 ```sh
 docker service create --name certbot-dns-cron \
@@ -255,6 +259,7 @@ By default, the cron invokes the main script every hour.
 ## Script behaviour
 
 ### Certificate Signing stage
+
 Assuming you passed in the necessary environment variables, renewing certs would be as simple as invoking the main script, whether through `docker exec`, or directly. The script always reads environment variables to initialize all variables each time it is invoked.
 
 ### Deploy stage
