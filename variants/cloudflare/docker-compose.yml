@@ -49,21 +49,13 @@ services:
       - EMAIL_PASSWORD=myPassword
       - SMTP_SERVER=foo.smtp.com
       - SMTP_PORT=587
+
     deploy:
       replicas: 1
       restart_policy:
         condition: on-failure
       placement:
         constraints: [node.role == manager]
-    secrets:
-      - certbot_domains_file
-      - certbot_dns_cloudflare_credentials.ini
-      - certbot_email_from
-      - certbot_email_to
-      - certbot_email_user
-      - certbot_email_password
-      - certbot_email_smtp_server
-      - certbot_email_smtp_port
     volumes:
       - nginx-proxy-certs:/certs/
       - ./data/letsencrypt:/etc/letsencrypt/:rw
