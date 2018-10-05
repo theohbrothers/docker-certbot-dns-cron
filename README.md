@@ -46,13 +46,13 @@ Environment variables are used to control various steps of the automation proces
 
 | Name | Default value | Description |
 |:-------:|:---------------:|:---------:|
-| `DEPLOY_CERTS` | `""` | Whether to deploy the sign cert and key. This copies `/etc/letsencrypt/live/<domain>/privkey.pem` as `<domain>.key`, and `/etc/letsencrypt/live/<domain>/cert.pem` as `<domain>.crt`. Omit environment variable to disable deploy
+| `DEPLOY_CERTS` | `""` | Whether to deploy the sign cert and key. This copies `/etc/letsencrypt/live/<domain>/privkey.pem` to `/certs/<domain>.key`, and `/etc/letsencrypt/live/<domain>/cert.pem` to `/certs/<domain>.crt`. Omit environment variable to disable deploy
 
 ### 3. Reload
 
 | Name | Default value | Description |
 |:-------:|:---------------:|:---------:|
-| `TARGET_CONTAINER_NAME` | `""` | Container name to reload (with SIGHUP) after signing and obtaining cert. Omit environment variable to disable reload
+| `TARGET_CONTAINER_NAME` | `""` | Container name to reload (with SIGHUP) after signing and obtaining cert. In Swarm mode, specify `<stack><service>` and any container with name starting with `<stack><service>` will be sent a signal. Only one container name may be matched, so ensure this is as unique as possible. Omit environment variable to disable reload
 
 ### 4. Report Emailing
 
@@ -270,9 +270,9 @@ To disable this stage, omit the environment variable `DEPLOY_CERTS`
 
 ### Reload stage
 
-The script sends a `SIGHUP` (`1`) to a container of name `TARGET_CONTAINER_NAME`.
+The script sends a `SIGHUP` (`1`) to a container with name starting with `TARGET_CONTAINER_NAME`.
 
-When `Swarm Mode` is used, all services go by the naming convention `<stack><service>`. `<stack>` is the name given when using `docker stack up`, and `<service>` is the service key in the `docker-compose.yml` or `docker-stack.yml`. If a container starts with `<stack><service>`, ignoring the service name's suffix, that container is sent the signal. As an example, if the value of `TARGET_CONTAINER_NAME` variable is `mystack_docker-gen`, the service called `mystack_docker-gen.jb2xwgp3ktnmsmp1eo31563jw` is sent the reload signal.
+When `Swarm Mode` is used, all services go by the naming convention `<stack><service>`. `<stack>` is the name given when using `docker stack up`, and `<service>` is the service key in the `docker-compose.yml` or `docker-stack.yml`. If a container name starts with `<stack><service>`, ignoring the suffix, that container is sent the signal. As an example, if the value of `TARGET_CONTAINER_NAME` variable is `mystack_docker-gen`, the service called `mystack_docker-gen.1.jb2xwgp3ktnmsmp1eo31563jw` is sent the reload signal. The signal is sent to one container only; if multiple containers names match `mystack_docker-gen`, no signal is sent. Therefore keep the container name as unique as possible.
 
 To disable this stage, omit the environment variable `TARGET_CONTAINER_NAME`
 
