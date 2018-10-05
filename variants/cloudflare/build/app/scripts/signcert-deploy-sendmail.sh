@@ -28,11 +28,16 @@ fi
 # Stop here if no domains were given as arguments
 [ -z "$DOMAINS" ] && error 'Domain(s) not provided.' && exit 1
 
+num_domains=$( echo "$DOMAINS" | wc -l )
+num_skipped=0
+output "Will sign certs for $num_domains domains"
 for domain in $DOMAINS
 do
     # 1. Sign cert
-    signcert "$domain" "$OPT_FORCE_RENEWAL"
-    [ $? = 0 ] && success_signcert=1
+    signcert "$domain" "$OPT_FORCE_RENEWAL" | tee /tmp/status.log
+    status=$( cat /tmp/status.log )
+    [ -n "$( echo "$status" | grep 'Certificate not yet due for renewal' )" ] && output "Certificate for domain $domain not yet due for renewal." && num_skipped=$( echo `expr $num_skipped + 1` ) && continue
+    [ -n "$( echo "$status" | grep 'Congratulations! Your certificate and chain have been saved' )" ] && output "Certificate for domain $domain was signed." && success_signcert=1 || success_signcert=
 
     if [ -n "$success_signcert" ]; then
         if [ -n "$DEPLOY_CERTS" ]; then
@@ -43,7 +48,7 @@ do
             cert="$LETSENCRYPT_DIR/live/$domain/cert.pem"
             dest_cert="/certs/$domain.key"
             cp "$key" "$dest_key" && chown root:root "$dest_key" && chmod 440 "$dest_key" && cp "$cert" "$dest_cert" && chown root:root "$dest_cert" && chmod 440 "$dest_cert"
-            [ $? = 0 ] && success_deploycert=1
+            [ $? = 0 ] && success_deploycert=1 || success_deploycert=
 
             # 3. Reload target container (e.g. docker-gen)
             if [ -n "$success_deploycert" ]; then
@@ -62,18 +67,16 @@ EOF
                         signal="SIGHUP"
                         output "Reloading target container $TARGET_CONTAINER_NAME of id: $target_container_id with signal $signal"
                         echo -e "POST /containers/$target_container_id/kill?signal=$signal HTTP/1.0\r\n" | nc local:/tmp/docker.sock >/dev/null
-                        [ $? = 0 ] && success_reload_container=1
+                        [ $? = 0 ] && success_reload_container=1 || success_reload_container=
                     else
                         error "Cannot reload target container $TARGET_CONTAINER_NAME. Reason: failed to get container id!"
                     fi
 
-                    [ -n "$success_reload_container" ] && report="$report\nReload target container successful" || report="$report\nReload target container failed"
                 else
                     output "Not reloading target container"
                 fi
             fi
 
-            [ -n "$success_deploycert" ] && report="$report\nDeploy cert for $domain successful" || report="$report\nDeploy certs for $domain failed"
         else
             output "Not deploy cert and key"
         fi
@@ -81,12 +84,20 @@ EOF
 
     # Generate report
     [ -n "$success_signcert" ] && report="$report\nSign cert for $domain successful" || report="$report\nSign cert for $domain failed"
+    [ -n "$DEPLOY_CERTS" ] && [ -n "$success_deploycert" ] && report="$report\nDeploy cert for $domain successful" || report="$report\nDeploy certs for $domain failed"
+    [ -n "$TARGET_CONTAINER_NAME" ] && [ -n "$success_reload_container" ] && report="$report\nReload target container successful" || report="$report\nReload target container failed"
+
 done
 
+# Generate report
+report_title="Subject: [Certbot automation summary report: $( echo `expr $num_domains - $num_skipped` ) newly signed certs]"
+report="$report_title\n\nCertbot automation summary report on $( date '+%Y-%m-%d %H:%M:%S' ): \n$report"
+
+# Skip sending email if all certs were not due
+[ "$num_domains" = "$num_skipped" ] && output "Nothing to do" && EMAIL_REPORT= && report="$report\nAll certificates not due for renewal."
+
+# 4. Send email of report
 if [ -n "$EMAIL_REPORT" ];  then
-    # 4. Send email of report
-    report_title="Subject: [Certbot automation summary report]"
-    report="$report_title\n\nCertbot automation summary report on $( date '+%Y-%m-%d %H:%M:%S' ): \n$report"
     if [ -n "$EMAIL_DISABLED" ]; then
         report="$report\nCannot send email due to missing variables"
     else
