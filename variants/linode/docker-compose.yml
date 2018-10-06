@@ -50,17 +50,15 @@ services:
       - SMTP_SERVER=foo.smtp.com
       - SMTP_PORT=587
 
+    volumes:
+      - nginx-proxy-certs:/certs/:rw
+      - ./data/letsencrypt:/etc/letsencrypt/:rw
+      - /var/run/docker.sock:/tmp/docker.sock:ro
     deploy:
       replicas: 1
       restart_policy:
         condition: on-failure
       placement:
         constraints: [node.role == manager]
-    volumes:
-      - nginx-proxy-certs:/certs/
-      - ./data/letsencrypt:/etc/letsencrypt/:rw
-      - /var/run/docker.sock:/tmp/docker.sock:ro
-    stop_signal: SIGKILL
-    entrypoint: /bin/sh -c 'rm -f /var/spool/cron/crontabs/root && touch /var/spool/cron/crontabs/root && chmod 640 /var/spool/cron/crontabs/root && echo "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin" >> /var/spool/cron/crontabs/root && echo -e "0 * * * * /etc/letsencrypt/scripts/signcert-deploy-sendmail.sh\n" >> /var/spool/cron/crontabs/root && exec crond -f'
 
 
