@@ -87,7 +87,7 @@ Instead of writing your email credentials in the `docker-compose.yml`, use speci
 
 ### Not using Swarm Secrets
 
-This example signs 2 wildcard certificates, one certificate for `exmaple.com`, and one for `ns.example.com` :
+This example signs 2 wildcard certificates, one certificate for `example.com`, and one for `ns.example.com` :
 
 1. `example.com`, `*.example.com`
 2. `ns.example.com`, `*.ns.example.com`
@@ -103,7 +103,6 @@ docker service create --name certbot-dns-cron \
     --mount type=bind,source=/var/run/certbot_dns_cloudflare_credentials.ini,target=/etc/letsencrypt/certbot_dns_cloudflare_credentials.ini,readonly \
     --mount type=bind,source=/path/to/data/certs/,target=/certs \
     --mount type=bind,source=/path/to/data/letsencrypt,target=/etc/letsencrypt \
-    --mount type=bind,source=/var/run/docker.sock,target=/tmp/docker.sock,readonly \
 	--replicas=1 \
 	wonderous/certbot-dns-cron
 ```
@@ -117,7 +116,7 @@ dns_cloudflare_api_key = 0123456789abcdef0123456789abcdef01234567
 
 ### Using Swarm Secrets
 
-This example signs 2 wildcard certificates, one certificate for `exmaple.com`, and one for `ns.example.com` :
+This example signs 2 wildcard certificates, one certificate for `example.com`, and one for `ns.example.com` :
 
 1. `example.com`, `*.example.com`
 2. `ns.example.com`, `*.ns.example.com`
@@ -134,7 +133,6 @@ docker service create --name certbot-dns-cron \
     -e PLUGIN_DNS_PROPAGATION_SECONDS=10 \
     --mount type=bind,source=/path/to/data/certs/,target=/certs \
     --mount type=bind,source=/path/to/data/letsencrypt,target=/etc/letsencrypt \
-    --mount type=bind,source=/var/run/docker.sock,target=/tmp/docker.sock \
 	--replicas=1 \
 	wonderous/certbot-dns-cron
 ```
@@ -156,7 +154,7 @@ ns.example.com
 
 ### Full Example (Using Swarm Secrets)
 
-This example will sign, deploy certs, reload a target container, and email a summary report about the success of those tasks. Four wildcard certificates will be obtained:
+This example will sign, deploy certs, reload a target container (requires mounting the `docker.sock`), and email a summary report about the success of those tasks (requires email credential secrets). Four wildcard certificates will be obtained:
 
 1. `example.com`, `*.example.com`
 2. `ns.example.com`, `*.ns.example.com`
@@ -274,7 +272,10 @@ The script sends a `SIGHUP` (`1`) to a container with name starting with `TARGET
 
 When `Swarm Mode` is used, all services go by the naming convention `<stack><service>`. `<stack>` is the name given when using `docker stack up`, and `<service>` is the service key in the `docker-compose.yml` or `docker-stack.yml`. If a container name starts with `<stack><service>`, ignoring the suffix, that container is sent the signal. As an example, if the value of `TARGET_CONTAINER_NAME` variable is `mystack_docker-gen`, the service called `mystack_docker-gen.1.jb2xwgp3ktnmsmp1eo31563jw` is sent the reload signal. The signal is sent to one container only; if multiple containers names match `mystack_docker-gen`, no signal is sent. Therefore keep the container name as unique as possible.
 
+Mounting the `/var/run/docker.sock` is necessary for reloading to take place.
+
 To disable this stage, omit the environment variable `TARGET_CONTAINER_NAME`
+
 
 ### Email stage
 
