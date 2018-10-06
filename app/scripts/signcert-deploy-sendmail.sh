@@ -1,7 +1,6 @@
-#/bin/sh
+#!/bin/sh
 
-# This script signs cert, copies it to /nginx-certs, then reloads nginx-proxy
-# It is a wrapper around signcert.sh
+# This script signs cert of domain names passed as arguments, copies it to the cert store /certs, reloads a target container, and emails the success status of the three previous steps.
 
 cd "$( realpath $(dirname "$0") )"
 source ./init.sh
