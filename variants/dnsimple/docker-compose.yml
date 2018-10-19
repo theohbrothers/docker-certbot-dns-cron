@@ -2,7 +2,7 @@ version: '3.3'
 services:
 
   certbot:
-    image: certbot/dns-cloudflare
+    image: certbot/dns-dnsimple
     environment:
       ###########
       # Certbot #
@@ -21,8 +21,8 @@ services:
       - DOMAIN_ADMIN_EMAIL_LOCALPART=admin
 
       # Certbot DNS Plugin
-      - PLUGIN_DNS_PROVIDER=cloudflare
-      - PLUGIN_DNS_CREDENTIALS_FILE=/etc/letsencrypt/certbot_dns_cloudflare_credentials.ini
+      - PLUGIN_DNS_PROVIDER=dnsimple
+      - PLUGIN_DNS_CREDENTIALS_FILE=/etc/letsencrypt/certbot_dns_dnsimple_credentials.ini
       - PLUGIN_DNS_PROPAGATION_SECONDS=10
 
       ##########
@@ -60,5 +60,4 @@ services:
         condition: on-failure
       placement:
         constraints: [node.role == manager]
-
 

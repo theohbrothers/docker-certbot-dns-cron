@@ -61,4 +61,3 @@ services:
       placement:
         constraints: [node.role == manager]
 
-

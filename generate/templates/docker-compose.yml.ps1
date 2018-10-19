@@ -3,7 +3,7 @@ version: '3.3'
 services:
 
   certbot:
-    image: certbot/dns-cloudflare
+    image: certbot/dns-$( $VARIANT['name'] )
     environment:
       ###########
       # Certbot #
@@ -14,7 +14,7 @@ services:
       # RSA Key size
       - RSA_KEY_SIZE=4096
 
-$( if ($Secret) {
+$( if ( $PASS_VARIABLES['secret'] ) {
 @'
       # Domains file, delimited by "\n"
       - DOMAINS_FILE=/run/secrets/certbot_domains.txt
@@ -31,8 +31,8 @@ $( if ($Secret) {
       - DOMAIN_ADMIN_EMAIL_LOCALPART=admin
 
       # Certbot DNS Plugin
-      - PLUGIN_DNS_PROVIDER=cloudflare
-      - PLUGIN_DNS_CREDENTIALS_FILE=$( if ($Secret) { '/run/secrets/certbot_dns_cloudflare_credentials.ini' } else { '/etc/letsencrypt/certbot_dns_cloudflare_credentials.ini' } )
+      - PLUGIN_DNS_PROVIDER=$( $VARIANT['name'] )
+      - PLUGIN_DNS_CREDENTIALS_FILE=$( if ( $PASS_VARIABLES['secret'] ) { "/run/secrets/certbot_dns_$( $VARIANT['name'] )_credentials.ini" } else { "/etc/letsencrypt/certbot_dns_$( $VARIANT['name'] )_credentials.ini" } )
       - PLUGIN_DNS_PROPAGATION_SECONDS=10
 
       ##########
@@ -52,7 +52,7 @@ $( if ($Secret) {
       ##########
       # Whether to email the certbot report on successful signing of certs
       - EMAIL_REPORT=1
-$( if ($Secret) {
+$( if ( $PASS_VARIABLES['secret'] ) {
 @'
       # Email vars to send Report
       - EMAIL_FROM_FILE=/run/secrets/certbot_email_from
@@ -73,18 +73,18 @@ $( if ($Secret) {
       - SMTP_PORT=587
 '@
 })
-$( if ($Secret) {
-@'
+$( if ( $PASS_VARIABLES['secret'] ) {
+@"
     secrets:
       - certbot_domains.txt
-      - certbot_dns_cloudflare_credentials.ini
+      - certbot_dns_$( $VARIANT['name'] )_credentials.ini
       - certbot_email_from
       - certbot_email_to
       - certbot_email_user
       - certbot_email_password
       - certbot_email_smtp_server
       - certbot_email_smtp_port
-'@
+"@
 })
     volumes:
       - nginx-proxy-certs:/certs/:rw
@@ -97,12 +97,12 @@ $( if ($Secret) {
       placement:
         constraints: [node.role == manager]
 
-$( if ($Secret) {
-@'
+$( if ( $PASS_VARIABLES['secret'] ) {
+@"
 secrets:
   certbot_domains.txt:
     external: true
-  certbot_file_dns_cloudflare_credentials.ini:
+  certbot_file_dns_$( $VARIANT['name'] )_credentials.ini:
     external: true
   certbot_email_from:
     external: true
@@ -119,6 +119,6 @@ secrets:
 volumes:
   nginx-proxy-certs:
     external: true
-'@
+"@
 })
 "@
