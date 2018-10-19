@@ -3,7 +3,7 @@ version: '3.3'
 services:
 
   certbot:
-    image: certbot/dns-$( $VARIANT['name'] )
+    image: certbot/dns-$( $VARIANT['tag'] )
     environment:
       ###########
       # Certbot #
@@ -31,8 +31,8 @@ $( if ( $PASS_VARIABLES['secret'] ) {
       - DOMAIN_ADMIN_EMAIL_LOCALPART=admin
 
       # Certbot DNS Plugin
-      - PLUGIN_DNS_PROVIDER=$( $VARIANT['name'] )
-      - PLUGIN_DNS_CREDENTIALS_FILE=$( if ( $PASS_VARIABLES['secret'] ) { "/run/secrets/certbot_dns_$( $VARIANT['name'] )_credentials.ini" } else { "/etc/letsencrypt/certbot_dns_$( $VARIANT['name'] )_credentials.ini" } )
+      - PLUGIN_DNS_PROVIDER=$( $VARIANT['tag'] )
+      - PLUGIN_DNS_CREDENTIALS_FILE=$( if ( $PASS_VARIABLES['secret'] ) { "/run/secrets/certbot_dns_$( $VARIANT['tag'] )_credentials.ini" } else { "/etc/letsencrypt/certbot_dns_$( $VARIANT['tag'] )_credentials.ini" } )
       - PLUGIN_DNS_PROPAGATION_SECONDS=10
 
       ##########
@@ -77,7 +77,7 @@ $( if ( $PASS_VARIABLES['secret'] ) {
 @"
     secrets:
       - certbot_domains.txt
-      - certbot_dns_$( $VARIANT['name'] )_credentials.ini
+      - certbot_dns_$( $VARIANT['tag'] )_credentials.ini
       - certbot_email_from
       - certbot_email_to
       - certbot_email_user
@@ -102,7 +102,7 @@ $( if ( $PASS_VARIABLES['secret'] ) {
 secrets:
   certbot_domains.txt:
     external: true
-  certbot_file_dns_$( $VARIANT['name'] )_credentials.ini:
+  certbot_file_dns_$( $VARIANT['tag'] )_credentials.ini:
     external: true
   certbot_email_from:
     external: true

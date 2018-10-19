@@ -2,51 +2,51 @@
 $VARIANTS_VERSION = "1.0.0"
 $VARIANTS = @(
     @{
-        name = 'cloudflare'
+        tag = 'cloudflare'
     }
     @{
-        name = 'cloudxns'
+        tag = 'cloudxns'
     }
     @{
-        name = 'digitalocean'
+        tag = 'digitalocean'
     }
     @{
-        name = 'dnsimple'
+        tag = 'dnsimple'
     }
     @{
-        name = 'dnsmadeeasy'
+        tag = 'dnsmadeeasy'
     }
     @{
-        name = 'google'
+        tag = 'google'
     }
     @{
-        name = 'linode'
+        tag = 'linode'
     }
     @{
-        name = 'luadns'
+        tag = 'luadns'
     }
     @{
-        name = 'nsone'
+        tag = 'nsone'
     }
     @{
-        name = 'ovh'
+        tag = 'ovh'
     }
     @{
-        name = 'rfc2136'
+        tag = 'rfc2136'
     }
     @{
-        name = 'route53'
+        tag = 'route53'
     }
 )
 
 # Docker image variants' definitions (shared)
 $VARIANTS_SHARED = @{
+    version = $VARIANTS_VERSION
     buildContextFiles = @{
         templates = @{
             'Dockerfile' = @{
                 common = $true
                 #includeHeader = $true
-                #includeVariant = $true
                 #includeFooter = $true
                 passes = @(
                     @{
@@ -78,7 +78,6 @@ $VARIANTS_SHARED = @{
                     }
                 )
             }
-
             'crontab' = @{
                 common = $true
                 passes = @(
@@ -98,7 +97,6 @@ $VARIANTS_SHARED = @{
 # Intelligently add properties
 $VARIANTS | % {
     $VARIANT = $_
-    $VARIANT['version'] = $VARIANTS_VERSION
     $VARIANTS_SHARED.GetEnumerator() | % {
         $VARIANT[$_.Name] =  $_.Value
     }

@@ -11,15 +11,15 @@ stages:
 $( $VARIANTS | % {
 @"
 
-build-$( $_['name'] ):
+build-$( $_['tag'] ):
   stage: build
   only:
     - master
     - api
   variables:
-    VARIANT_NAME: "$( $_['name'] )"
-    VARIANT_TAG: "$( $_['name'] )"
-    VARIANT_TAG_WITH_VERSION: "$( $_['name'] )-v$( $_['version'] )"
+    VARIANT_TAG: "$( $_['tag'] )"
+    VARIANT_TAG_WITH_VERSION: "$( $_['tag'] )-v$( $_['version'] )"
+    VARIANT_BUILD_DIR: "./variants/$( if ( $_['distro'] ) { "$( $_['distro'] )/$( $_['tag'] )" } else { "$( $_['tag'] )" } )"
 "@ + @'
 
   before_script:
@@ -38,7 +38,7 @@ build-$( $_['name'] ):
       -t "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG_WITH_VERSION}"
       -t "${CI_REGISTRY_IMAGE}:${VARIANT_TAG}"
       -t "${CI_REGISTRY_IMAGE}:${VARIANT_TAG_WITH_VERSION}"
-      "./variants/${VARIANT_NAME}"
+      "${VARIANT_BUILD_DIR}"
 
     - date '+%Y-%m-%d %H:%M:%S %z'
 

@@ -1,6 +1,6 @@
 @"
-# Dockerfile: https://hub.docker.com/r/certbot/dns-$( $VARIANT['name'] )/
-FROM certbot/dns-$( $VARIANT['name'] )
+# Dockerfile: https://hub.docker.com/r/certbot/dns-$( $VARIANT['tag'] )/
+FROM certbot/dns-$( $VARIANT['tag'] )
 
 MAINTAINER The Oh Brothers
 
