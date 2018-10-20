@@ -19,7 +19,7 @@ build-$( $_['tag'] ):
   variables:
     VARIANT_TAG: "$( $_['tag'] )"
     VARIANT_TAG_WITH_VERSION: "$( $_['tag'] )-v$( $_['version'] )"
-    VARIANT_BUILD_DIR: "./variants/$( if ( $_['distro'] ) { "$( $_['distro'] )/$( $_['tag'] )" } else { "$( $_['tag'] )" } )"
+    VARIANT_BUILD_DIR: "$( $_['build_dir_rel'] )"
 "@ + @'
 
   before_script:

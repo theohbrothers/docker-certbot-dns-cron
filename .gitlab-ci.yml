@@ -16,7 +16,7 @@ build-cloudflare:
   variables:
     VARIANT_TAG: "cloudflare"
     VARIANT_TAG_WITH_VERSION: "cloudflare-v1.0.0"
-    VARIANT_BUILD_DIR: "./variants/cloudflare"
+    VARIANT_BUILD_DIR: "variants/cloudflare"
   before_script:
     - date '+%Y-%m-%d %H:%M:%S %z'
 
@@ -62,7 +62,7 @@ build-cloudxns:
   variables:
     VARIANT_TAG: "cloudxns"
     VARIANT_TAG_WITH_VERSION: "cloudxns-v1.0.0"
-    VARIANT_BUILD_DIR: "./variants/cloudxns"
+    VARIANT_BUILD_DIR: "variants/cloudxns"
   before_script:
     - date '+%Y-%m-%d %H:%M:%S %z'
 
@@ -108,7 +108,7 @@ build-digitalocean:
   variables:
     VARIANT_TAG: "digitalocean"
     VARIANT_TAG_WITH_VERSION: "digitalocean-v1.0.0"
-    VARIANT_BUILD_DIR: "./variants/digitalocean"
+    VARIANT_BUILD_DIR: "variants/digitalocean"
   before_script:
     - date '+%Y-%m-%d %H:%M:%S %z'
 
@@ -154,7 +154,7 @@ build-dnsimple:
   variables:
     VARIANT_TAG: "dnsimple"
     VARIANT_TAG_WITH_VERSION: "dnsimple-v1.0.0"
-    VARIANT_BUILD_DIR: "./variants/dnsimple"
+    VARIANT_BUILD_DIR: "variants/dnsimple"
   before_script:
     - date '+%Y-%m-%d %H:%M:%S %z'
 
@@ -200,7 +200,7 @@ build-dnsmadeeasy:
   variables:
     VARIANT_TAG: "dnsmadeeasy"
     VARIANT_TAG_WITH_VERSION: "dnsmadeeasy-v1.0.0"
-    VARIANT_BUILD_DIR: "./variants/dnsmadeeasy"
+    VARIANT_BUILD_DIR: "variants/dnsmadeeasy"
   before_script:
     - date '+%Y-%m-%d %H:%M:%S %z'
 
@@ -246,7 +246,7 @@ build-google:
   variables:
     VARIANT_TAG: "google"
     VARIANT_TAG_WITH_VERSION: "google-v1.0.0"
-    VARIANT_BUILD_DIR: "./variants/google"
+    VARIANT_BUILD_DIR: "variants/google"
   before_script:
     - date '+%Y-%m-%d %H:%M:%S %z'
 
@@ -292,7 +292,7 @@ build-linode:
   variables:
     VARIANT_TAG: "linode"
     VARIANT_TAG_WITH_VERSION: "linode-v1.0.0"
-    VARIANT_BUILD_DIR: "./variants/linode"
+    VARIANT_BUILD_DIR: "variants/linode"
   before_script:
     - date '+%Y-%m-%d %H:%M:%S %z'
 
@@ -338,7 +338,7 @@ build-luadns:
   variables:
     VARIANT_TAG: "luadns"
     VARIANT_TAG_WITH_VERSION: "luadns-v1.0.0"
-    VARIANT_BUILD_DIR: "./variants/luadns"
+    VARIANT_BUILD_DIR: "variants/luadns"
   before_script:
     - date '+%Y-%m-%d %H:%M:%S %z'
 
@@ -384,7 +384,7 @@ build-nsone:
   variables:
     VARIANT_TAG: "nsone"
     VARIANT_TAG_WITH_VERSION: "nsone-v1.0.0"
-    VARIANT_BUILD_DIR: "./variants/nsone"
+    VARIANT_BUILD_DIR: "variants/nsone"
   before_script:
     - date '+%Y-%m-%d %H:%M:%S %z'
 
@@ -430,7 +430,7 @@ build-ovh:
   variables:
     VARIANT_TAG: "ovh"
     VARIANT_TAG_WITH_VERSION: "ovh-v1.0.0"
-    VARIANT_BUILD_DIR: "./variants/ovh"
+    VARIANT_BUILD_DIR: "variants/ovh"
   before_script:
     - date '+%Y-%m-%d %H:%M:%S %z'
 
@@ -476,7 +476,7 @@ build-rfc2136:
   variables:
     VARIANT_TAG: "rfc2136"
     VARIANT_TAG_WITH_VERSION: "rfc2136-v1.0.0"
-    VARIANT_BUILD_DIR: "./variants/rfc2136"
+    VARIANT_BUILD_DIR: "variants/rfc2136"
   before_script:
     - date '+%Y-%m-%d %H:%M:%S %z'
 
@@ -522,7 +522,7 @@ build-route53:
   variables:
     VARIANT_TAG: "route53"
     VARIANT_TAG_WITH_VERSION: "route53-v1.0.0"
-    VARIANT_BUILD_DIR: "./variants/route53"
+    VARIANT_BUILD_DIR: "variants/route53"
   before_script:
     - date '+%Y-%m-%d %H:%M:%S %z'
 
