@@ -1,4 +1,4 @@
-# certbot-dns-cron
+# docker-certbot-dns-cron
 
 Dockerized [Certbot with DNS Plugins](https://certbot.eff.org/docs/using.html#dns-plugins), with cron, deploy, email alert capabilities.
 
