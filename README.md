@@ -1,5 +1,8 @@
 # docker-certbot-dns-cron
 
+[![pipeline status](https://gitlab.com/leojonathanoh/docker-certbot-dns-cron/badges/dev/pipeline.svg)](https://gitlab.com/leojonathanoh/docker-certbot-dns-cron/commits/dev)
+
+
 Dockerized [Certbot with DNS Plugins](https://certbot.eff.org/docs/using.html#dns-plugins), with cron, deploy, email alert capabilities.
 
 It signs wildcards certificates for domains. For instance, the DNS Names for an obtained certificate for `example.com` would be: `example.com, *.example.com`.
