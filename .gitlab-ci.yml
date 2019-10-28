@@ -35,8 +35,10 @@ stages:
   - docker build
     -t "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG}"
     -t "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG_WITH_VERSION}"
+    -t "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:latest"
     -t "${CI_REGISTRY_IMAGE}:${VARIANT_TAG}"
     -t "${CI_REGISTRY_IMAGE}:${VARIANT_TAG_WITH_VERSION}"
+    -t "${CI_REGISTRY_IMAGE}:latest"
     "${VARIANT_BUILD_DIR}"
 
   - date '+%Y-%m-%d %H:%M:%S %z'
@@ -44,10 +46,12 @@ stages:
   # Push to Docker Hub registry. E.g. 'namespace/my-project:tag'
   - docker push "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG}"
   - docker push "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG_WITH_VERSION}"
+  - docker push "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:latest"
 
   # Push to GitLab registry. E.g. 'registry.gitlab.com/namespace/my-project:tag
   - docker push "${CI_REGISTRY_IMAGE}:${VARIANT_TAG}"
   - docker push "${CI_REGISTRY_IMAGE}:${VARIANT_TAG_WITH_VERSION}"
+  - docker push "${CI_REGISTRY_IMAGE}:latest"
 
   after_script:
   - date '+%Y-%m-%d %H:%M:%S %z'
