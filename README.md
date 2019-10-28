@@ -1,7 +1,9 @@
 # docker-certbot-dns-cron
 
 [![pipeline status](https://gitlab.com/leojonathanoh/docker-certbot-dns-cron/badges/dev/pipeline.svg)](https://gitlab.com/leojonathanoh/docker-certbot-dns-cron/commits/dev)
-
+[![github-tag](https://img.shields.io/github/tag/leojonathanoh/docker-certbot-dns-cron)](https://github.com/leojonathanoh/docker-certbot-dns-cron/releases/)
+[![docker-image-size](https://img.shields.io/microbadger/image-size/leojonathanoh/docker-certbot-dns-cron/latest)](https://hub.docker.com/r/leojonathanoh/docker-certbot-dns-cron)
+[![docker-image-size](https://img.shields.io/microbadger/image-size/leojonathanoh/docker-certbot-dns-cron/latest)](https://hub.docker.com/r/leojonathanoh/docker-certbot-dns-cron)
 
 Dockerized [Certbot with DNS Plugins](https://certbot.eff.org/docs/using.html#dns-plugins), with cron, deploy, email alert capabilities.
 
