@@ -1,6 +1,6 @@
 # docker-certbot-dns-cron
 
-[![pipeline status](https://gitlab.com/leojonathanoh/docker-certbot-dns-cron/badges/dev/pipeline.svg)](https://gitlab.com/leojonathanoh/docker-certbot-dns-cron/commits/dev)
+[![github-actions](https://github.com/leojonathanoh/docker-certbot-dns-cron/workflows/build/badge.svg)](https://github.com/leojonathanoh/docker-certbot-dns-cron/actions)
 [![github-tag](https://img.shields.io/github/tag/leojonathanoh/docker-certbot-dns-cron)](https://github.com/leojonathanoh/docker-certbot-dns-cron/releases/)
 [![docker-image-size](https://img.shields.io/microbadger/image-size/leojonathanoh/docker-certbot-dns-cron/latest)](https://hub.docker.com/r/leojonathanoh/docker-certbot-dns-cron)
 [![docker-image-layers](https://img.shields.io/microbadger/layers/leojonathanoh/docker-certbot-dns-cron/latest)](https://hub.docker.com/r/leojonathanoh/docker-certbot-dns-cron)
