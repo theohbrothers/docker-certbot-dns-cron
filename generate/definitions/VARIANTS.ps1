@@ -29,7 +29,7 @@ $local:VARIANTS_PACKAGES_VERSIONS = @(
     'v1.2.0'
     'v1.1.0'
     'v1.0.0'
-    'v0.40.1'
+    # 'v0.40.1'
 )
 $VARIANTS = @(
     foreach ($package in $local:VARIANTS_PACKAGES) {
