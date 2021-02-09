@@ -2,7 +2,7 @@ version: '3.3'
 services:
 
   certbot:
-    image: certbot/dns-v1.11.0-digitalocean
+    image: leojonathanoh/docker-certbot-dns-cron:v1.11.0-digitalocean
     environment:
       ###########
       # Certbot #
@@ -22,7 +22,7 @@ services:
 
       # Certbot DNS Plugin
       - PLUGIN_DNS_PROVIDER=v1.11.0-digitalocean
-      - PLUGIN_DNS_CREDENTIALS_FILE=/etc/letsencrypt/certbot_dns_v1.11.0-digitalocean_credentials.ini
+      - PLUGIN_DNS_CREDENTIALS_FILE=/etc/letsencrypt/certbot_dns_digitalocean_credentials.ini
       - PLUGIN_DNS_PROPAGATION_SECONDS=10
 
       ##########
@@ -54,10 +54,9 @@ services:
       - nginx-proxy-certs:/certs/:rw
       - ./data/letsencrypt:/etc/letsencrypt/:rw
       - /var/run/docker.sock:/tmp/docker.sock:ro
-    deploy:
-      replicas: 1
-      restart_policy:
-        condition: on-failure
-      placement:
-        constraints: [node.role == manager]
 
+
+
+volumes:
+  nginx-proxy-certs:
+    external: true
