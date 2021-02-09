@@ -6,7 +6,7 @@ $content = @'
 [![docker-image-size](https://img.shields.io/microbadger/image-size/leojonathanoh/docker-certbot-dns-cron/latest)](https://hub.docker.com/r/leojonathanoh/docker-certbot-dns-cron)
 [![docker-image-layers](https://img.shields.io/microbadger/layers/leojonathanoh/docker-certbot-dns-cron/latest)](https://hub.docker.com/r/leojonathanoh/docker-certbot-dns-cron)
 
-Dockerized [Certbot with DNS Plugins](https://certbot.eff.org/docs/using.html#dns-plugins), with cron, deploy, email alert capabilities.
+Dockerized [Certbot with DNS Plugins](https://certbot.eff.org/docs/using.html#dns-plugins), based on [official certbot docker images](https://hub.docker.com/u/certbot), with cron, deploy, email alert capabilities.
 
 It signs wildcards certificates for domains. For instance, the DNS Names for an obtained certificate for `example.com` would be: `example.com, *.example.com`.
 
@@ -20,18 +20,18 @@ Each variant is Certbot DNS provider plugin image.
 '@
 
 $content += @"
-| Tag | Plugin name |
-|:-------:|:---------:|
+| Tag | Plugin name | Dockerfile Build Context  |
+|:-------:|:---------:|:---------:
 $(
 ($VARIANTS | % {
     if ( $_['tag_as_latest'] ) {
 @"
-| ``:$( $_['tag'] )``, ``:latest`` | [certbot-dns-$( $_['_metadata']['package'] )](https://certbot-dns-$( $_['_metadata']['package'] ).readthedocs.io)
+| ``:$( $_['tag'] )``, ``:latest`` | [certbot-dns-$( $_['_metadata']['package'] )](https://certbot-dns-$( $_['_metadata']['package'] ).readthedocs.io) | [View](variants/$( $_['tag'] ) )
 
 "@
     }else {
 @"
-| ``:$( $_['tag'] )`` | [certbot-dns-$( $_['_metadata']['package'] )](https://certbot-dns-$( $_['_metadata']['package'] ).readthedocs.io)
+| ``:$( $_['tag'] )`` | [certbot-dns-$( $_['_metadata']['package'] )](https://certbot-dns-$( $_['_metadata']['package'] ).readthedocs.io) | [View](variants/$( $_['tag'] ) )
 
 "@
     }
