@@ -1,0 +1,63 @@
+version: '3.3'
+services:
+
+  certbot:
+    image: certbot/dns-v1.1.0-cloudxns
+    environment:
+      ###########
+      # Certbot #
+      ###########
+      # Whether to use production or staging LetsEncrypt endpoint. 0 for production, 1 for staging
+      - STAGING=0
+
+      # RSA Key size
+      - RSA_KEY_SIZE=4096
+
+      # Domains (delimited by ';')
+      - DOMAINS=foo.example.com;bar.example.com
+      # Admin Email's Local-part for LetsEncrypt expiry-notification emails
+      # E.g. use "admin" for notification emails sent to "admin.example.com"
+      # See https://en.wikipedia.org/wiki/Email_address for more information on the Local-part
+      - DOMAIN_ADMIN_EMAIL_LOCALPART=admin
+
+      # Certbot DNS Plugin
+      - PLUGIN_DNS_PROVIDER=v1.1.0-cloudxns
+      - PLUGIN_DNS_CREDENTIALS_FILE=/etc/letsencrypt/certbot_dns_v1.1.0-cloudxns_credentials.ini
+      - PLUGIN_DNS_PROPAGATION_SECONDS=10
+
+      ##########
+      # Deploy #
+      ##########
+      # Whether to deploy certs. Omit environment variable to disable
+      - DEPLOY_CERTS=1
+
+      ##########
+      # Reload #
+      ##########
+      # Container name to reload after signing and obtaining cert. Omit environment variable to disable
+      - TARGET_CONTAINER_NAME=nginx-proxy-docker-gen
+
+      ##########
+      # Report #
+      ##########
+      # Whether to email the certbot report on successful signing of certs
+      - EMAIL_REPORT=1
+      # Email vars to send Report
+      - EMAIL_FROM=foo@example.com
+      - EMAIL_TO=foo@example.com
+      - EMAIL_USER=foo@example.com
+      - EMAIL_PASSWORD=myPassword
+      - SMTP_SERVER=foo.smtp.com
+      - SMTP_PORT=587
+
+    volumes:
+      - nginx-proxy-certs:/certs/:rw
+      - ./data/letsencrypt:/etc/letsencrypt/:rw
+      - /var/run/docker.sock:/tmp/docker.sock:ro
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+      placement:
+        constraints: [node.role == manager]
+

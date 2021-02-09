@@ -15,6 +15,21 @@ $local:VARIANTS_PACKAGES = @(
 )
 $local:VARIANTS_PACKAGES_VERSIONS = @(
     'v1.12.0'
+    'v1.11.0'
+    'v1.10.1'
+    'v1.10.1'
+    'v1.9.0'
+    'v1.8.0'
+    'v1.7.0'
+    'v1.6.0'
+    'v1.5.0'
+    'v1.4.0'
+    'v1.4.0'
+    'v1.3.0'
+    'v1.2.0'
+    'v1.1.0'
+    'v1.0.0'
+    'v0.40.1'
 )
 $VARIANTS = @(
     foreach ($package in $local:VARIANTS_PACKAGES) {
