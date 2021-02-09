@@ -13,7 +13,9 @@ All Certbot plugins are supported: `cloudflare`, `cloudxns`, `digitalocean`, `dn
 
 ## Variants
 
-Each variant is Certbot DNS provider plugin image.| Tag | Plugin name |
+Each variant is Certbot DNS provider plugin image.
+
+| Tag | Plugin name |
 |:-------:|:---------:|
 | `:v1.12.0-cloudflare`, `:latest` | [certbot-dns-cloudflare](https://certbot-dns-cloudflare.readthedocs.io)
 | `:v1.12.0-cloudxns` | [certbot-dns-cloudxns](https://certbot-dns-cloudxns.readthedocs.io)
