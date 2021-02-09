@@ -3,7 +3,7 @@ version: '3.3'
 services:
 
   certbot:
-    image: certbot/dns-$( $VARIANT['tag'] )
+    image: leojonathanoh/docker-certbot-dns-cron:$( $VARIANT['tag'] )
     environment:
       ###########
       # Certbot #
@@ -32,7 +32,7 @@ $( if ( $PASS_VARIABLES['secret'] ) {
 
       # Certbot DNS Plugin
       - PLUGIN_DNS_PROVIDER=$( $VARIANT['tag'] )
-      - PLUGIN_DNS_CREDENTIALS_FILE=$( if ( $PASS_VARIABLES['secret'] ) { "/run/secrets/certbot_dns_$( $VARIANT['tag'] )_credentials.ini" } else { "/etc/letsencrypt/certbot_dns_$( $VARIANT['tag'] )_credentials.ini" } )
+      - PLUGIN_DNS_CREDENTIALS_FILE=$( if ( $PASS_VARIABLES['secret'] ) { "/run/secrets/certbot_dns_$( $VARIANT['_metadata']['package'] )_credentials.ini" } else { "/etc/letsencrypt/certbot_dns_$( $VARIANT['_metadata']['package'] )_credentials.ini" } )
       - PLUGIN_DNS_PROPAGATION_SECONDS=10
 
       ##########
@@ -77,7 +77,7 @@ $( if ( $PASS_VARIABLES['secret'] ) {
 @"
     secrets:
       - certbot_domains.txt
-      - certbot_dns_$( $VARIANT['tag'] )_credentials.ini
+      - certbot_dns_$( $VARIANT['_metadata']['package'] )_credentials.ini
       - certbot_email_from
       - certbot_email_to
       - certbot_email_user
@@ -90,6 +90,9 @@ $( if ( $PASS_VARIABLES['secret'] ) {
       - nginx-proxy-certs:/certs/:rw
       - ./data/letsencrypt:/etc/letsencrypt/:rw
       - /var/run/docker.sock:/tmp/docker.sock:ro
+
+$( if ( $PASS_VARIABLES['secret'] ) {
+@"
     deploy:
       replicas: 1
       restart_policy:
@@ -97,12 +100,10 @@ $( if ( $PASS_VARIABLES['secret'] ) {
       placement:
         constraints: [node.role == manager]
 
-$( if ( $PASS_VARIABLES['secret'] ) {
-@"
 secrets:
   certbot_domains.txt:
     external: true
-  certbot_file_dns_$( $VARIANT['tag'] )_credentials.ini:
+  certbot_dns_$( $VARIANT['_metadata']['package'] )_credentials.ini:
     external: true
   certbot_email_from:
     external: true
@@ -116,9 +117,11 @@ secrets:
     external: true
   certbot_email_smtp_port:
     external: true
+"@
+})
+
 volumes:
   nginx-proxy-certs:
     external: true
-"@
-})
+
 "@
