@@ -1,0 +1,6 @@
+@"
+{
+  "type": "service_account",
+  ...
+}
+"@

@@ -1,0 +1,4 @@
+@"
+# NS1 API credentials used by Certbot
+dns_nsone_api_key = MDAwMDAwMDAwMDAwMDAw
+"@

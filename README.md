@@ -15,20 +15,20 @@ All Certbot plugins are supported: `cloudflare`, `cloudxns`, `digitalocean`, `dn
 
 Each variant is Certbot DNS provider plugin image.
 
-| Tag | Plugin name |
-|:-------:|:---------:|
-| `:v1.12.0-cloudflare`, `:latest` | [certbot-dns-cloudflare](https://certbot-dns-cloudflare.readthedocs.io)
-| `:v1.12.0-cloudxns` | [certbot-dns-cloudxns](https://certbot-dns-cloudxns.readthedocs.io)
-| `:v1.12.0-digitalocean` | [certbot-dns-digitalocean](https://certbot-dns-digitalocean.readthedocs.io)
-| `:v1.12.0-dnsimple` | [certbot-dns-dnsimple](https://certbot-dns-dnsimple.readthedocs.io)
-| `:v1.12.0-dnsmadeeasy` | [certbot-dns-dnsmadeeasy](https://certbot-dns-dnsmadeeasy.readthedocs.io)
-| `:v1.12.0-google` | [certbot-dns-google](https://certbot-dns-google.readthedocs.io)
-| `:v1.12.0-linode` | [certbot-dns-linode](https://certbot-dns-linode.readthedocs.io)
-| `:v1.12.0-luadns` | [certbot-dns-luadns](https://certbot-dns-luadns.readthedocs.io)
-| `:v1.12.0-nsone` | [certbot-dns-nsone](https://certbot-dns-nsone.readthedocs.io)
-| `:v1.12.0-ovh` | [certbot-dns-ovh](https://certbot-dns-ovh.readthedocs.io)
-| `:v1.12.0-rfc2136` | [certbot-dns-rfc2136](https://certbot-dns-rfc2136.readthedocs.io)
-| `:v1.12.0-route53` | [certbot-dns-route53](https://certbot-dns-route53.readthedocs.io)
+| Tag | Plugin name | Dockerfile Build Context  |
+|:-------:|:---------:|:---------:
+| `:v1.12.0-cloudflare`, `:latest` | [certbot-dns-cloudflare](https://certbot-dns-cloudflare.readthedocs.io) | [View](variants/v1.12.0-cloudflare )
+| `:v1.12.0-cloudxns` | [certbot-dns-cloudxns](https://certbot-dns-cloudxns.readthedocs.io) | [View](variants/v1.12.0-cloudxns )
+| `:v1.12.0-digitalocean` | [certbot-dns-digitalocean](https://certbot-dns-digitalocean.readthedocs.io) | [View](variants/v1.12.0-digitalocean )
+| `:v1.12.0-dnsimple` | [certbot-dns-dnsimple](https://certbot-dns-dnsimple.readthedocs.io) | [View](variants/v1.12.0-dnsimple )
+| `:v1.12.0-dnsmadeeasy` | [certbot-dns-dnsmadeeasy](https://certbot-dns-dnsmadeeasy.readthedocs.io) | [View](variants/v1.12.0-dnsmadeeasy )
+| `:v1.12.0-google` | [certbot-dns-google](https://certbot-dns-google.readthedocs.io) | [View](variants/v1.12.0-google )
+| `:v1.12.0-linode` | [certbot-dns-linode](https://certbot-dns-linode.readthedocs.io) | [View](variants/v1.12.0-linode )
+| `:v1.12.0-luadns` | [certbot-dns-luadns](https://certbot-dns-luadns.readthedocs.io) | [View](variants/v1.12.0-luadns )
+| `:v1.12.0-nsone` | [certbot-dns-nsone](https://certbot-dns-nsone.readthedocs.io) | [View](variants/v1.12.0-nsone )
+| `:v1.12.0-ovh` | [certbot-dns-ovh](https://certbot-dns-ovh.readthedocs.io) | [View](variants/v1.12.0-ovh )
+| `:v1.12.0-rfc2136` | [certbot-dns-rfc2136](https://certbot-dns-rfc2136.readthedocs.io) | [View](variants/v1.12.0-rfc2136 )
+| `:v1.12.0-route53` | [certbot-dns-route53](https://certbot-dns-route53.readthedocs.io) | [View](variants/v1.12.0-route53 )
 
 ## Environment variables
 

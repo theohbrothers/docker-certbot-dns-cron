@@ -20,18 +20,18 @@ Each variant is Certbot DNS provider plugin image.
 '@
 
 $content += @"
-| Tag | Plugin name |
-|:-------:|:---------:|
+| Tag | Plugin name | Dockerfile Build Context  |
+|:-------:|:---------:|:---------:
 $(
 ($VARIANTS | % {
     if ( $_['tag_as_latest'] ) {
 @"
-| ``:$( $_['tag'] )``, ``:latest`` | [certbot-dns-$( $_['_metadata']['package'] )](https://certbot-dns-$( $_['_metadata']['package'] ).readthedocs.io)
+| ``:$( $_['tag'] )``, ``:latest`` | [certbot-dns-$( $_['_metadata']['package'] )](https://certbot-dns-$( $_['_metadata']['package'] ).readthedocs.io) | [View](variants/$( $_['tag'] ) )
 
 "@
     }else {
 @"
-| ``:$( $_['tag'] )`` | [certbot-dns-$( $_['_metadata']['package'] )](https://certbot-dns-$( $_['_metadata']['package'] ).readthedocs.io)
+| ``:$( $_['tag'] )`` | [certbot-dns-$( $_['_metadata']['package'] )](https://certbot-dns-$( $_['_metadata']['package'] ).readthedocs.io) | [View](variants/$( $_['tag'] ) )
 
 "@
     }
