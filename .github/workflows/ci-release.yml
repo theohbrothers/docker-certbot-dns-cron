@@ -1,21 +1,16 @@
-name: build
+name: ci-release
 
 on:
   push:
     branches:
-    - '**'
-    tags:
-    - '**'
-  pull_request:
-    branches:
-    - '**'
+    - release
 
 jobs:
   build-cloudflare:
     runs-on: ubuntu-18.04
     env:
       VARIANT_TAG: cloudflare
-      # VARIANT_TAG_WITH_VERSION: cloudflare-${GITHUB_REF}
+      # VARIANT_TAG_WITH_REF: cloudflare-${GITHUB_REF}
       VARIANT_BUILD_DIR: variants/cloudflare
     steps:
     - uses: actions/checkout@v1
@@ -46,16 +41,21 @@ jobs:
         CI_PROJECT_NAME=$( echo "${GITHUB_REPOSITORY}" | rev | cut -d '/' -f 1 | rev )
 
         # Get 'ref-name' from 'refs/heads/ref-name'
-        VARIANT_TAG_WITH_VERSION=$( echo "${GITHUB_REF}" | rev | cut -d '/' -f 1 | rev )
+        REF=$( echo "${GITHUB_REF}" | rev | cut -d '/' -f 1 | rev )
+        SHA_SHORT=$( echo "${GITHUB_SHA}" | cut -c1-7 )
+
+        # Generate the final tags. E.g. 'release-v1.0.0-alpine' and 'release-b29758a-v1.0.0-alpine'
+        VARIANT_TAG_WITH_REF="${REF}-${VARIANT_TAG}"
+        VARIANT_TAG_WITH_REF_AND_SHA_SHORT="${REF}-${SHA_SHORT}-${VARIANT_TAG}"
 
         docker build \
           -t "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG}" \
-          -t "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG_WITH_VERSION}" \
-          -t "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:latest" \
+          -t "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG_WITH_REF}" \
+          -t "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG_WITH_REF_AND_SHA_SHORT}" \
           "${VARIANT_BUILD_DIR}"
         docker push "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG}"
-        docker push "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG_WITH_VERSION}"
-        docker push "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:latest"
+        docker push "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG_WITH_REF}"
+        docker push "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG_WITH_REF_AND_SHA_SHORT}"
     - name: Clean-up
       run: docker logout
       if: always()
@@ -63,7 +63,7 @@ jobs:
     runs-on: ubuntu-18.04
     env:
       VARIANT_TAG: cloudxns
-      # VARIANT_TAG_WITH_VERSION: cloudxns-${GITHUB_REF}
+      # VARIANT_TAG_WITH_REF: cloudxns-${GITHUB_REF}
       VARIANT_BUILD_DIR: variants/cloudxns
     steps:
     - uses: actions/checkout@v1
@@ -94,16 +94,21 @@ jobs:
         CI_PROJECT_NAME=$( echo "${GITHUB_REPOSITORY}" | rev | cut -d '/' -f 1 | rev )
 
         # Get 'ref-name' from 'refs/heads/ref-name'
-        VARIANT_TAG_WITH_VERSION=$( echo "${GITHUB_REF}" | rev | cut -d '/' -f 1 | rev )
+        REF=$( echo "${GITHUB_REF}" | rev | cut -d '/' -f 1 | rev )
+        SHA_SHORT=$( echo "${GITHUB_SHA}" | cut -c1-7 )
+
+        # Generate the final tags. E.g. 'release-v1.0.0-alpine' and 'release-b29758a-v1.0.0-alpine'
+        VARIANT_TAG_WITH_REF="${REF}-${VARIANT_TAG}"
+        VARIANT_TAG_WITH_REF_AND_SHA_SHORT="${REF}-${SHA_SHORT}-${VARIANT_TAG}"
 
         docker build \
           -t "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG}" \
-          -t "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG_WITH_VERSION}" \
-          -t "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:latest" \
+          -t "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG_WITH_REF}" \
+          -t "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG_WITH_REF_AND_SHA_SHORT}" \
           "${VARIANT_BUILD_DIR}"
         docker push "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG}"
-        docker push "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG_WITH_VERSION}"
-        docker push "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:latest"
+        docker push "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG_WITH_REF}"
+        docker push "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG_WITH_REF_AND_SHA_SHORT}"
     - name: Clean-up
       run: docker logout
       if: always()
@@ -111,7 +116,7 @@ jobs:
     runs-on: ubuntu-18.04
     env:
       VARIANT_TAG: digitalocean
-      # VARIANT_TAG_WITH_VERSION: digitalocean-${GITHUB_REF}
+      # VARIANT_TAG_WITH_REF: digitalocean-${GITHUB_REF}
       VARIANT_BUILD_DIR: variants/digitalocean
     steps:
     - uses: actions/checkout@v1
@@ -142,16 +147,21 @@ jobs:
         CI_PROJECT_NAME=$( echo "${GITHUB_REPOSITORY}" | rev | cut -d '/' -f 1 | rev )
 
         # Get 'ref-name' from 'refs/heads/ref-name'
-        VARIANT_TAG_WITH_VERSION=$( echo "${GITHUB_REF}" | rev | cut -d '/' -f 1 | rev )
+        REF=$( echo "${GITHUB_REF}" | rev | cut -d '/' -f 1 | rev )
+        SHA_SHORT=$( echo "${GITHUB_SHA}" | cut -c1-7 )
+
+        # Generate the final tags. E.g. 'release-v1.0.0-alpine' and 'release-b29758a-v1.0.0-alpine'
+        VARIANT_TAG_WITH_REF="${REF}-${VARIANT_TAG}"
+        VARIANT_TAG_WITH_REF_AND_SHA_SHORT="${REF}-${SHA_SHORT}-${VARIANT_TAG}"
 
         docker build \
           -t "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG}" \
-          -t "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG_WITH_VERSION}" \
-          -t "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:latest" \
+          -t "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG_WITH_REF}" \
+          -t "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG_WITH_REF_AND_SHA_SHORT}" \
           "${VARIANT_BUILD_DIR}"
         docker push "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG}"
-        docker push "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG_WITH_VERSION}"
-        docker push "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:latest"
+        docker push "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG_WITH_REF}"
+        docker push "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG_WITH_REF_AND_SHA_SHORT}"
     - name: Clean-up
       run: docker logout
       if: always()
@@ -159,7 +169,7 @@ jobs:
     runs-on: ubuntu-18.04
     env:
       VARIANT_TAG: dnsimple
-      # VARIANT_TAG_WITH_VERSION: dnsimple-${GITHUB_REF}
+      # VARIANT_TAG_WITH_REF: dnsimple-${GITHUB_REF}
       VARIANT_BUILD_DIR: variants/dnsimple
     steps:
     - uses: actions/checkout@v1
@@ -190,16 +200,21 @@ jobs:
         CI_PROJECT_NAME=$( echo "${GITHUB_REPOSITORY}" | rev | cut -d '/' -f 1 | rev )
 
         # Get 'ref-name' from 'refs/heads/ref-name'
-        VARIANT_TAG_WITH_VERSION=$( echo "${GITHUB_REF}" | rev | cut -d '/' -f 1 | rev )
+        REF=$( echo "${GITHUB_REF}" | rev | cut -d '/' -f 1 | rev )
+        SHA_SHORT=$( echo "${GITHUB_SHA}" | cut -c1-7 )
+
+        # Generate the final tags. E.g. 'release-v1.0.0-alpine' and 'release-b29758a-v1.0.0-alpine'
+        VARIANT_TAG_WITH_REF="${REF}-${VARIANT_TAG}"
+        VARIANT_TAG_WITH_REF_AND_SHA_SHORT="${REF}-${SHA_SHORT}-${VARIANT_TAG}"
 
         docker build \
           -t "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG}" \
-          -t "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG_WITH_VERSION}" \
-          -t "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:latest" \
+          -t "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG_WITH_REF}" \
+          -t "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG_WITH_REF_AND_SHA_SHORT}" \
           "${VARIANT_BUILD_DIR}"
         docker push "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG}"
-        docker push "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG_WITH_VERSION}"
-        docker push "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:latest"
+        docker push "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG_WITH_REF}"
+        docker push "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG_WITH_REF_AND_SHA_SHORT}"
     - name: Clean-up
       run: docker logout
       if: always()
@@ -207,7 +222,7 @@ jobs:
     runs-on: ubuntu-18.04
     env:
       VARIANT_TAG: dnsmadeeasy
-      # VARIANT_TAG_WITH_VERSION: dnsmadeeasy-${GITHUB_REF}
+      # VARIANT_TAG_WITH_REF: dnsmadeeasy-${GITHUB_REF}
       VARIANT_BUILD_DIR: variants/dnsmadeeasy
     steps:
     - uses: actions/checkout@v1
@@ -238,16 +253,21 @@ jobs:
         CI_PROJECT_NAME=$( echo "${GITHUB_REPOSITORY}" | rev | cut -d '/' -f 1 | rev )
 
         # Get 'ref-name' from 'refs/heads/ref-name'
-        VARIANT_TAG_WITH_VERSION=$( echo "${GITHUB_REF}" | rev | cut -d '/' -f 1 | rev )
+        REF=$( echo "${GITHUB_REF}" | rev | cut -d '/' -f 1 | rev )
+        SHA_SHORT=$( echo "${GITHUB_SHA}" | cut -c1-7 )
+
+        # Generate the final tags. E.g. 'release-v1.0.0-alpine' and 'release-b29758a-v1.0.0-alpine'
+        VARIANT_TAG_WITH_REF="${REF}-${VARIANT_TAG}"
+        VARIANT_TAG_WITH_REF_AND_SHA_SHORT="${REF}-${SHA_SHORT}-${VARIANT_TAG}"
 
         docker build \
           -t "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG}" \
-          -t "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG_WITH_VERSION}" \
-          -t "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:latest" \
+          -t "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG_WITH_REF}" \
+          -t "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG_WITH_REF_AND_SHA_SHORT}" \
           "${VARIANT_BUILD_DIR}"
         docker push "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG}"
-        docker push "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG_WITH_VERSION}"
-        docker push "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:latest"
+        docker push "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG_WITH_REF}"
+        docker push "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG_WITH_REF_AND_SHA_SHORT}"
     - name: Clean-up
       run: docker logout
       if: always()
@@ -255,7 +275,7 @@ jobs:
     runs-on: ubuntu-18.04
     env:
       VARIANT_TAG: google
-      # VARIANT_TAG_WITH_VERSION: google-${GITHUB_REF}
+      # VARIANT_TAG_WITH_REF: google-${GITHUB_REF}
       VARIANT_BUILD_DIR: variants/google
     steps:
     - uses: actions/checkout@v1
@@ -286,16 +306,21 @@ jobs:
         CI_PROJECT_NAME=$( echo "${GITHUB_REPOSITORY}" | rev | cut -d '/' -f 1 | rev )
 
         # Get 'ref-name' from 'refs/heads/ref-name'
-        VARIANT_TAG_WITH_VERSION=$( echo "${GITHUB_REF}" | rev | cut -d '/' -f 1 | rev )
+        REF=$( echo "${GITHUB_REF}" | rev | cut -d '/' -f 1 | rev )
+        SHA_SHORT=$( echo "${GITHUB_SHA}" | cut -c1-7 )
+
+        # Generate the final tags. E.g. 'release-v1.0.0-alpine' and 'release-b29758a-v1.0.0-alpine'
+        VARIANT_TAG_WITH_REF="${REF}-${VARIANT_TAG}"
+        VARIANT_TAG_WITH_REF_AND_SHA_SHORT="${REF}-${SHA_SHORT}-${VARIANT_TAG}"
 
         docker build \
           -t "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG}" \
-          -t "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG_WITH_VERSION}" \
-          -t "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:latest" \
+          -t "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG_WITH_REF}" \
+          -t "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG_WITH_REF_AND_SHA_SHORT}" \
           "${VARIANT_BUILD_DIR}"
         docker push "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG}"
-        docker push "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG_WITH_VERSION}"
-        docker push "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:latest"
+        docker push "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG_WITH_REF}"
+        docker push "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG_WITH_REF_AND_SHA_SHORT}"
     - name: Clean-up
       run: docker logout
       if: always()
@@ -303,7 +328,7 @@ jobs:
     runs-on: ubuntu-18.04
     env:
       VARIANT_TAG: linode
-      # VARIANT_TAG_WITH_VERSION: linode-${GITHUB_REF}
+      # VARIANT_TAG_WITH_REF: linode-${GITHUB_REF}
       VARIANT_BUILD_DIR: variants/linode
     steps:
     - uses: actions/checkout@v1
@@ -334,16 +359,21 @@ jobs:
         CI_PROJECT_NAME=$( echo "${GITHUB_REPOSITORY}" | rev | cut -d '/' -f 1 | rev )
 
         # Get 'ref-name' from 'refs/heads/ref-name'
-        VARIANT_TAG_WITH_VERSION=$( echo "${GITHUB_REF}" | rev | cut -d '/' -f 1 | rev )
+        REF=$( echo "${GITHUB_REF}" | rev | cut -d '/' -f 1 | rev )
+        SHA_SHORT=$( echo "${GITHUB_SHA}" | cut -c1-7 )
+
+        # Generate the final tags. E.g. 'release-v1.0.0-alpine' and 'release-b29758a-v1.0.0-alpine'
+        VARIANT_TAG_WITH_REF="${REF}-${VARIANT_TAG}"
+        VARIANT_TAG_WITH_REF_AND_SHA_SHORT="${REF}-${SHA_SHORT}-${VARIANT_TAG}"
 
         docker build \
           -t "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG}" \
-          -t "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG_WITH_VERSION}" \
-          -t "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:latest" \
+          -t "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG_WITH_REF}" \
+          -t "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG_WITH_REF_AND_SHA_SHORT}" \
           "${VARIANT_BUILD_DIR}"
         docker push "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG}"
-        docker push "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG_WITH_VERSION}"
-        docker push "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:latest"
+        docker push "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG_WITH_REF}"
+        docker push "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG_WITH_REF_AND_SHA_SHORT}"
     - name: Clean-up
       run: docker logout
       if: always()
@@ -351,7 +381,7 @@ jobs:
     runs-on: ubuntu-18.04
     env:
       VARIANT_TAG: luadns
-      # VARIANT_TAG_WITH_VERSION: luadns-${GITHUB_REF}
+      # VARIANT_TAG_WITH_REF: luadns-${GITHUB_REF}
       VARIANT_BUILD_DIR: variants/luadns
     steps:
     - uses: actions/checkout@v1
@@ -382,16 +412,21 @@ jobs:
         CI_PROJECT_NAME=$( echo "${GITHUB_REPOSITORY}" | rev | cut -d '/' -f 1 | rev )
 
         # Get 'ref-name' from 'refs/heads/ref-name'
-        VARIANT_TAG_WITH_VERSION=$( echo "${GITHUB_REF}" | rev | cut -d '/' -f 1 | rev )
+        REF=$( echo "${GITHUB_REF}" | rev | cut -d '/' -f 1 | rev )
+        SHA_SHORT=$( echo "${GITHUB_SHA}" | cut -c1-7 )
+
+        # Generate the final tags. E.g. 'release-v1.0.0-alpine' and 'release-b29758a-v1.0.0-alpine'
+        VARIANT_TAG_WITH_REF="${REF}-${VARIANT_TAG}"
+        VARIANT_TAG_WITH_REF_AND_SHA_SHORT="${REF}-${SHA_SHORT}-${VARIANT_TAG}"
 
         docker build \
           -t "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG}" \
-          -t "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG_WITH_VERSION}" \
-          -t "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:latest" \
+          -t "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG_WITH_REF}" \
+          -t "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG_WITH_REF_AND_SHA_SHORT}" \
           "${VARIANT_BUILD_DIR}"
         docker push "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG}"
-        docker push "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG_WITH_VERSION}"
-        docker push "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:latest"
+        docker push "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG_WITH_REF}"
+        docker push "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG_WITH_REF_AND_SHA_SHORT}"
     - name: Clean-up
       run: docker logout
       if: always()
@@ -399,7 +434,7 @@ jobs:
     runs-on: ubuntu-18.04
     env:
       VARIANT_TAG: nsone
-      # VARIANT_TAG_WITH_VERSION: nsone-${GITHUB_REF}
+      # VARIANT_TAG_WITH_REF: nsone-${GITHUB_REF}
       VARIANT_BUILD_DIR: variants/nsone
     steps:
     - uses: actions/checkout@v1
@@ -430,16 +465,21 @@ jobs:
         CI_PROJECT_NAME=$( echo "${GITHUB_REPOSITORY}" | rev | cut -d '/' -f 1 | rev )
 
         # Get 'ref-name' from 'refs/heads/ref-name'
-        VARIANT_TAG_WITH_VERSION=$( echo "${GITHUB_REF}" | rev | cut -d '/' -f 1 | rev )
+        REF=$( echo "${GITHUB_REF}" | rev | cut -d '/' -f 1 | rev )
+        SHA_SHORT=$( echo "${GITHUB_SHA}" | cut -c1-7 )
+
+        # Generate the final tags. E.g. 'release-v1.0.0-alpine' and 'release-b29758a-v1.0.0-alpine'
+        VARIANT_TAG_WITH_REF="${REF}-${VARIANT_TAG}"
+        VARIANT_TAG_WITH_REF_AND_SHA_SHORT="${REF}-${SHA_SHORT}-${VARIANT_TAG}"
 
         docker build \
           -t "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG}" \
-          -t "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG_WITH_VERSION}" \
-          -t "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:latest" \
+          -t "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG_WITH_REF}" \
+          -t "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG_WITH_REF_AND_SHA_SHORT}" \
           "${VARIANT_BUILD_DIR}"
         docker push "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG}"
-        docker push "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG_WITH_VERSION}"
-        docker push "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:latest"
+        docker push "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG_WITH_REF}"
+        docker push "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG_WITH_REF_AND_SHA_SHORT}"
     - name: Clean-up
       run: docker logout
       if: always()
@@ -447,7 +487,7 @@ jobs:
     runs-on: ubuntu-18.04
     env:
       VARIANT_TAG: ovh
-      # VARIANT_TAG_WITH_VERSION: ovh-${GITHUB_REF}
+      # VARIANT_TAG_WITH_REF: ovh-${GITHUB_REF}
       VARIANT_BUILD_DIR: variants/ovh
     steps:
     - uses: actions/checkout@v1
@@ -478,16 +518,21 @@ jobs:
         CI_PROJECT_NAME=$( echo "${GITHUB_REPOSITORY}" | rev | cut -d '/' -f 1 | rev )
 
         # Get 'ref-name' from 'refs/heads/ref-name'
-        VARIANT_TAG_WITH_VERSION=$( echo "${GITHUB_REF}" | rev | cut -d '/' -f 1 | rev )
+        REF=$( echo "${GITHUB_REF}" | rev | cut -d '/' -f 1 | rev )
+        SHA_SHORT=$( echo "${GITHUB_SHA}" | cut -c1-7 )
+
+        # Generate the final tags. E.g. 'release-v1.0.0-alpine' and 'release-b29758a-v1.0.0-alpine'
+        VARIANT_TAG_WITH_REF="${REF}-${VARIANT_TAG}"
+        VARIANT_TAG_WITH_REF_AND_SHA_SHORT="${REF}-${SHA_SHORT}-${VARIANT_TAG}"
 
         docker build \
           -t "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG}" \
-          -t "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG_WITH_VERSION}" \
-          -t "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:latest" \
+          -t "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG_WITH_REF}" \
+          -t "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG_WITH_REF_AND_SHA_SHORT}" \
           "${VARIANT_BUILD_DIR}"
         docker push "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG}"
-        docker push "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG_WITH_VERSION}"
-        docker push "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:latest"
+        docker push "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG_WITH_REF}"
+        docker push "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG_WITH_REF_AND_SHA_SHORT}"
     - name: Clean-up
       run: docker logout
       if: always()
@@ -495,7 +540,7 @@ jobs:
     runs-on: ubuntu-18.04
     env:
       VARIANT_TAG: rfc2136
-      # VARIANT_TAG_WITH_VERSION: rfc2136-${GITHUB_REF}
+      # VARIANT_TAG_WITH_REF: rfc2136-${GITHUB_REF}
       VARIANT_BUILD_DIR: variants/rfc2136
     steps:
     - uses: actions/checkout@v1
@@ -526,16 +571,21 @@ jobs:
         CI_PROJECT_NAME=$( echo "${GITHUB_REPOSITORY}" | rev | cut -d '/' -f 1 | rev )
 
         # Get 'ref-name' from 'refs/heads/ref-name'
-        VARIANT_TAG_WITH_VERSION=$( echo "${GITHUB_REF}" | rev | cut -d '/' -f 1 | rev )
+        REF=$( echo "${GITHUB_REF}" | rev | cut -d '/' -f 1 | rev )
+        SHA_SHORT=$( echo "${GITHUB_SHA}" | cut -c1-7 )
+
+        # Generate the final tags. E.g. 'release-v1.0.0-alpine' and 'release-b29758a-v1.0.0-alpine'
+        VARIANT_TAG_WITH_REF="${REF}-${VARIANT_TAG}"
+        VARIANT_TAG_WITH_REF_AND_SHA_SHORT="${REF}-${SHA_SHORT}-${VARIANT_TAG}"
 
         docker build \
           -t "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG}" \
-          -t "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG_WITH_VERSION}" \
-          -t "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:latest" \
+          -t "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG_WITH_REF}" \
+          -t "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG_WITH_REF_AND_SHA_SHORT}" \
           "${VARIANT_BUILD_DIR}"
         docker push "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG}"
-        docker push "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG_WITH_VERSION}"
-        docker push "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:latest"
+        docker push "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG_WITH_REF}"
+        docker push "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG_WITH_REF_AND_SHA_SHORT}"
     - name: Clean-up
       run: docker logout
       if: always()
@@ -543,7 +593,7 @@ jobs:
     runs-on: ubuntu-18.04
     env:
       VARIANT_TAG: route53
-      # VARIANT_TAG_WITH_VERSION: route53-${GITHUB_REF}
+      # VARIANT_TAG_WITH_REF: route53-${GITHUB_REF}
       VARIANT_BUILD_DIR: variants/route53
     steps:
     - uses: actions/checkout@v1
@@ -574,16 +624,21 @@ jobs:
         CI_PROJECT_NAME=$( echo "${GITHUB_REPOSITORY}" | rev | cut -d '/' -f 1 | rev )
 
         # Get 'ref-name' from 'refs/heads/ref-name'
-        VARIANT_TAG_WITH_VERSION=$( echo "${GITHUB_REF}" | rev | cut -d '/' -f 1 | rev )
+        REF=$( echo "${GITHUB_REF}" | rev | cut -d '/' -f 1 | rev )
+        SHA_SHORT=$( echo "${GITHUB_SHA}" | cut -c1-7 )
+
+        # Generate the final tags. E.g. 'release-v1.0.0-alpine' and 'release-b29758a-v1.0.0-alpine'
+        VARIANT_TAG_WITH_REF="${REF}-${VARIANT_TAG}"
+        VARIANT_TAG_WITH_REF_AND_SHA_SHORT="${REF}-${SHA_SHORT}-${VARIANT_TAG}"
 
         docker build \
           -t "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG}" \
-          -t "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG_WITH_VERSION}" \
-          -t "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:latest" \
+          -t "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG_WITH_REF}" \
+          -t "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG_WITH_REF_AND_SHA_SHORT}" \
           "${VARIANT_BUILD_DIR}"
         docker push "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG}"
-        docker push "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG_WITH_VERSION}"
-        docker push "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:latest"
+        docker push "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG_WITH_REF}"
+        docker push "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG_WITH_REF_AND_SHA_SHORT}"
     - name: Clean-up
       run: docker logout
       if: always()
