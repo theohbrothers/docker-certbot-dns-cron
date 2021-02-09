@@ -75,7 +75,7 @@ $VARIANTS = @(
                                     variables = @{
                                         Secret = $true
                                     }
-                                    generatedFileNameOverride = 'docker-compose-secret.yml'
+                                    generatedFileNameOverride = 'docker-stack.yml'
                                 }
                             )
                         }
