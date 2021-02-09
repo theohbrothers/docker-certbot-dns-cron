@@ -109,7 +109,7 @@ docker service create --name certbot-dns-cron \
     --mount type=bind,source=/path/to/data/certs/,target=/certs \
     --mount type=bind,source=/path/to/data/letsencrypt,target=/etc/letsencrypt \
 	--replicas=1 \
-	wonderous/certbot-dns-cron
+	leojonathanoh/certbot-dns-cron:cloudflare
 ```
 
 Contents of secret `certbot_dns_cloudflare_credentials.ini`
@@ -139,7 +139,7 @@ docker service create --name certbot-dns-cron \
     --mount type=bind,source=/path/to/data/certs/,target=/certs \
     --mount type=bind,source=/path/to/data/letsencrypt,target=/etc/letsencrypt \
 	--replicas=1 \
-	wonderous/certbot-dns-cron
+	leojonathanoh/certbot-dns-cron:cloudflare
 ```
 
 Contents of secret `certbot_dns_cloudflare_credentials.ini`
@@ -194,7 +194,7 @@ docker service create --name certbot-dns-cron \
     --mount type=bind,source=/path/to/data/letsencrypt,target=/etc/letsencrypt \
     --mount type=bind,source=/var/run/docker.sock,target=/tmp/docker.sock \
 	--replicas=1 \
-	wonderous/certbot-dns-cron
+	leojnathanoh/certbot-dns-cron:cloudflare
 ```
 
 Contents of secret `certbot_domains.txt`
@@ -281,12 +281,12 @@ Mounting the `/var/run/docker.sock` is necessary for reloading to take place.
 
 To disable this stage, omit the environment variable `TARGET_CONTAINER_NAME`
 
-
 ### Email stage
 
 This sends a summarized report of all the previous steps and their success status. Only one email is sent each time the script is invoked.
 
 No email is sent in these cases:
+
 1. The email functionality is disabled by omitting `EMAIL_REPORT`
 2. One or more email credentials were not specified, among: `EMAIL_FROM`, `EMAIL_TO`, `EMAIL_USER`, `EMAIL_PASSWORD`, `SMTP_SERVER`, `SMTP_PORT`
 3. The email credentials were wrong
@@ -295,9 +295,6 @@ No email is sent in these cases:
 Assuming all variables are set correctly, as long as one certificate is obtained / renewed, a summary report will be sent.
 
 To disable this stage, omit the environment variable `EMAIL_REPORT`
-
-
-------------------------------------------
 
 ## Manually sign a certificate
 
