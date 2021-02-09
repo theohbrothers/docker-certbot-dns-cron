@@ -1,5 +1,4 @@
 # Docker image variants' definitions
-$VARIANTS_VERSION = "1.2.0"
 $VARIANTS = @(
     @{
         tag = 'cloudflare'
