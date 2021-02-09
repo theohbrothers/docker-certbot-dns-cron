@@ -1,6 +1,5 @@
-@"
-# Dockerfile: https://hub.docker.com/r/certbot/dns-$( $VARIANT['package'] )/
-FROM certbot/dns-$( $VARIANT['_metadata']['package'] ):$( $VARIANT['_metadata']['package_version'] )
+# Dockerfile: https://hub.docker.com/r/certbot/dns-/
+FROM certbot/dns-linode:v1.12.0
 
 MAINTAINER The Oh Brothers
 
@@ -21,4 +20,3 @@ WORKDIR /app
 
 ENTRYPOINT ["/docker-entrypoint.sh"]
 CMD ["crond", "-f"]
-"@

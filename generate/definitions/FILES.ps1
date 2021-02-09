@@ -1,8 +1,9 @@
 # Files' definition
 $FILES = @(
-    '.github/workflows/build.yml'
+    '.github/workflows/ci-master-pr.yml'
+    '.github/workflows/ci-release.yml'
     # '.gitlab-ci.yml'
-    #'README.md'
+    'README.md'
 )
 
 # Send definitions down the pipeline

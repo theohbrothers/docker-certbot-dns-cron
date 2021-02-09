@@ -1,41 +1,28 @@
 # Docker image variants' definitions
-$VARIANTS_VERSION = "1.2.0"
+$local:VARIANTS_PACKAGES = @(
+    'cloudflare'
+    'cloudxns'
+    'digitalocean'
+    'dnsimple'
+    'dnsmadeeasy'
+    'google'
+    'linode'
+    'luadns'
+    'nsone'
+    'ovh'
+    'rfc2136'
+    'route53'
+)
 $VARIANTS = @(
-    @{
-        tag = 'cloudflare'
-    }
-    @{
-        tag = 'cloudxns'
-    }
-    @{
-        tag = 'digitalocean'
-    }
-    @{
-        tag = 'dnsimple'
-    }
-    @{
-        tag = 'dnsmadeeasy'
-    }
-    @{
-        tag = 'google'
-    }
-    @{
-        tag = 'linode'
-    }
-    @{
-        tag = 'luadns'
-    }
-    @{
-        tag = 'nsone'
-    }
-    @{
-        tag = 'ovh'
-    }
-    @{
-        tag = 'rfc2136'
-    }
-    @{
-        tag = 'route53'
+    $VARIANTS_PACKAGES | % {
+        @{
+            _metadata = @{
+                package = $_
+                package_version = 'v1.12.0'
+            }
+            tag = "v1.12.0-$_"
+            tag_as_latest = if ($_ -eq 'cloudflare') { $true } else { $false }
+        }
     }
 )
 
