@@ -1,3 +1,4 @@
+$content = @'
 # docker-certbot-dns-cron
 
 [![github-actions](https://github.com/leojonathanoh/docker-certbot-dns-cron/workflows/ci-master-pr/badge.svg)](https://github.com/leojonathanoh/docker-certbot-dns-cron/actions)
@@ -13,21 +14,31 @@ All Certbot plugins are supported: `cloudflare`, `cloudxns`, `digitalocean`, `dn
 
 ## Variants
 
-Each variant is Certbot DNS provider plugin image.| Tag | Plugin name |
-|:-------:|:---------:|
-| `:v1.12.0-cloudflare`, `:latest` | [certbot-dns-cloudflare](https://certbot-dns-cloudflare.readthedocs.io)
-| `:v1.12.0-cloudxns` | [certbot-dns-cloudxns](https://certbot-dns-cloudxns.readthedocs.io)
-| `:v1.12.0-digitalocean` | [certbot-dns-digitalocean](https://certbot-dns-digitalocean.readthedocs.io)
-| `:v1.12.0-dnsimple` | [certbot-dns-dnsimple](https://certbot-dns-dnsimple.readthedocs.io)
-| `:v1.12.0-dnsmadeeasy` | [certbot-dns-dnsmadeeasy](https://certbot-dns-dnsmadeeasy.readthedocs.io)
-| `:v1.12.0-google` | [certbot-dns-google](https://certbot-dns-google.readthedocs.io)
-| `:v1.12.0-linode` | [certbot-dns-linode](https://certbot-dns-linode.readthedocs.io)
-| `:v1.12.0-luadns` | [certbot-dns-luadns](https://certbot-dns-luadns.readthedocs.io)
-| `:v1.12.0-nsone` | [certbot-dns-nsone](https://certbot-dns-nsone.readthedocs.io)
-| `:v1.12.0-ovh` | [certbot-dns-ovh](https://certbot-dns-ovh.readthedocs.io)
-| `:v1.12.0-rfc2136` | [certbot-dns-rfc2136](https://certbot-dns-rfc2136.readthedocs.io)
-| `:v1.12.0-route53` | [certbot-dns-route53](https://certbot-dns-route53.readthedocs.io)
+Each variant is Certbot DNS provider plugin image.
+'@
 
+$content += @"
+| Tag | Plugin name |
+|:-------:|:---------:|
+$(
+($VARIANTS | % {
+    if ( $_['tag_as_latest'] ) {
+@"
+| ``:$( $_['tag'] )``, ``:latest`` | [certbot-dns-$( $_['_metadata']['package'] )](https://certbot-dns-$( $_['_metadata']['package'] ).readthedocs.io)
+
+"@
+    }else {
+@"
+| ``:$( $_['tag'] )`` | [certbot-dns-$( $_['_metadata']['package'] )](https://certbot-dns-$( $_['_metadata']['package'] ).readthedocs.io)
+
+"@
+    }
+}) -join ''
+)
+
+"@
+
+$content += @'
 ## Environment variables
 
 Environment variables are used to control various steps of the automation process.
@@ -360,3 +371,6 @@ docker exec -it "$container_name_or_id" sh -c '/app/scripts/readcert.sh example.
 ```sh
 /app/scripts/readcert.sh example.com
 ```
+'@
+
+$content
