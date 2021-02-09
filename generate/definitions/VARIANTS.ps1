@@ -2,6 +2,7 @@
 $VARIANTS = @(
     @{
         tag = 'cloudflare'
+        tag_as_latest = $true
     }
     @{
         tag = 'cloudxns'
