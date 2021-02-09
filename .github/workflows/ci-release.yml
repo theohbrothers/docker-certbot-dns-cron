@@ -6,12 +6,12 @@ on:
     - release
 
 jobs:
-  build-cloudflare:
+  build-v1-12-0-cloudflare:
     runs-on: ubuntu-18.04
     env:
-      VARIANT_TAG: cloudflare
-      # VARIANT_TAG_WITH_REF: cloudflare-${GITHUB_REF}
-      VARIANT_BUILD_DIR: variants/cloudflare
+      VARIANT_TAG: v1.12.0-cloudflare
+      # VARIANT_TAG_WITH_REF: v1.12.0-cloudflare-${GITHUB_REF}
+      VARIANT_BUILD_DIR: variants/v1.12.0-cloudflare
     steps:
     - uses: actions/checkout@v1
     - name: Display system info (linux)
@@ -61,12 +61,12 @@ jobs:
     - name: Clean-up
       run: docker logout
       if: always()
-  build-cloudxns:
+  build-v1-12-0-cloudxns:
     runs-on: ubuntu-18.04
     env:
-      VARIANT_TAG: cloudxns
-      # VARIANT_TAG_WITH_REF: cloudxns-${GITHUB_REF}
-      VARIANT_BUILD_DIR: variants/cloudxns
+      VARIANT_TAG: v1.12.0-cloudxns
+      # VARIANT_TAG_WITH_REF: v1.12.0-cloudxns-${GITHUB_REF}
+      VARIANT_BUILD_DIR: variants/v1.12.0-cloudxns
     steps:
     - uses: actions/checkout@v1
     - name: Display system info (linux)
@@ -114,12 +114,12 @@ jobs:
     - name: Clean-up
       run: docker logout
       if: always()
-  build-digitalocean:
+  build-v1-12-0-digitalocean:
     runs-on: ubuntu-18.04
     env:
-      VARIANT_TAG: digitalocean
-      # VARIANT_TAG_WITH_REF: digitalocean-${GITHUB_REF}
-      VARIANT_BUILD_DIR: variants/digitalocean
+      VARIANT_TAG: v1.12.0-digitalocean
+      # VARIANT_TAG_WITH_REF: v1.12.0-digitalocean-${GITHUB_REF}
+      VARIANT_BUILD_DIR: variants/v1.12.0-digitalocean
     steps:
     - uses: actions/checkout@v1
     - name: Display system info (linux)
@@ -167,12 +167,12 @@ jobs:
     - name: Clean-up
       run: docker logout
       if: always()
-  build-dnsimple:
+  build-v1-12-0-dnsimple:
     runs-on: ubuntu-18.04
     env:
-      VARIANT_TAG: dnsimple
-      # VARIANT_TAG_WITH_REF: dnsimple-${GITHUB_REF}
-      VARIANT_BUILD_DIR: variants/dnsimple
+      VARIANT_TAG: v1.12.0-dnsimple
+      # VARIANT_TAG_WITH_REF: v1.12.0-dnsimple-${GITHUB_REF}
+      VARIANT_BUILD_DIR: variants/v1.12.0-dnsimple
     steps:
     - uses: actions/checkout@v1
     - name: Display system info (linux)
@@ -220,12 +220,12 @@ jobs:
     - name: Clean-up
       run: docker logout
       if: always()
-  build-dnsmadeeasy:
+  build-v1-12-0-dnsmadeeasy:
     runs-on: ubuntu-18.04
     env:
-      VARIANT_TAG: dnsmadeeasy
-      # VARIANT_TAG_WITH_REF: dnsmadeeasy-${GITHUB_REF}
-      VARIANT_BUILD_DIR: variants/dnsmadeeasy
+      VARIANT_TAG: v1.12.0-dnsmadeeasy
+      # VARIANT_TAG_WITH_REF: v1.12.0-dnsmadeeasy-${GITHUB_REF}
+      VARIANT_BUILD_DIR: variants/v1.12.0-dnsmadeeasy
     steps:
     - uses: actions/checkout@v1
     - name: Display system info (linux)
@@ -273,12 +273,12 @@ jobs:
     - name: Clean-up
       run: docker logout
       if: always()
-  build-google:
+  build-v1-12-0-google:
     runs-on: ubuntu-18.04
     env:
-      VARIANT_TAG: google
-      # VARIANT_TAG_WITH_REF: google-${GITHUB_REF}
-      VARIANT_BUILD_DIR: variants/google
+      VARIANT_TAG: v1.12.0-google
+      # VARIANT_TAG_WITH_REF: v1.12.0-google-${GITHUB_REF}
+      VARIANT_BUILD_DIR: variants/v1.12.0-google
     steps:
     - uses: actions/checkout@v1
     - name: Display system info (linux)
@@ -326,12 +326,12 @@ jobs:
     - name: Clean-up
       run: docker logout
       if: always()
-  build-linode:
+  build-v1-12-0-linode:
     runs-on: ubuntu-18.04
     env:
-      VARIANT_TAG: linode
-      # VARIANT_TAG_WITH_REF: linode-${GITHUB_REF}
-      VARIANT_BUILD_DIR: variants/linode
+      VARIANT_TAG: v1.12.0-linode
+      # VARIANT_TAG_WITH_REF: v1.12.0-linode-${GITHUB_REF}
+      VARIANT_BUILD_DIR: variants/v1.12.0-linode
     steps:
     - uses: actions/checkout@v1
     - name: Display system info (linux)
@@ -379,12 +379,12 @@ jobs:
     - name: Clean-up
       run: docker logout
       if: always()
-  build-luadns:
+  build-v1-12-0-luadns:
     runs-on: ubuntu-18.04
     env:
-      VARIANT_TAG: luadns
-      # VARIANT_TAG_WITH_REF: luadns-${GITHUB_REF}
-      VARIANT_BUILD_DIR: variants/luadns
+      VARIANT_TAG: v1.12.0-luadns
+      # VARIANT_TAG_WITH_REF: v1.12.0-luadns-${GITHUB_REF}
+      VARIANT_BUILD_DIR: variants/v1.12.0-luadns
     steps:
     - uses: actions/checkout@v1
     - name: Display system info (linux)
@@ -432,12 +432,12 @@ jobs:
     - name: Clean-up
       run: docker logout
       if: always()
-  build-nsone:
+  build-v1-12-0-nsone:
     runs-on: ubuntu-18.04
     env:
-      VARIANT_TAG: nsone
-      # VARIANT_TAG_WITH_REF: nsone-${GITHUB_REF}
-      VARIANT_BUILD_DIR: variants/nsone
+      VARIANT_TAG: v1.12.0-nsone
+      # VARIANT_TAG_WITH_REF: v1.12.0-nsone-${GITHUB_REF}
+      VARIANT_BUILD_DIR: variants/v1.12.0-nsone
     steps:
     - uses: actions/checkout@v1
     - name: Display system info (linux)
@@ -485,12 +485,12 @@ jobs:
     - name: Clean-up
       run: docker logout
       if: always()
-  build-ovh:
+  build-v1-12-0-ovh:
     runs-on: ubuntu-18.04
     env:
-      VARIANT_TAG: ovh
-      # VARIANT_TAG_WITH_REF: ovh-${GITHUB_REF}
-      VARIANT_BUILD_DIR: variants/ovh
+      VARIANT_TAG: v1.12.0-ovh
+      # VARIANT_TAG_WITH_REF: v1.12.0-ovh-${GITHUB_REF}
+      VARIANT_BUILD_DIR: variants/v1.12.0-ovh
     steps:
     - uses: actions/checkout@v1
     - name: Display system info (linux)
@@ -538,12 +538,12 @@ jobs:
     - name: Clean-up
       run: docker logout
       if: always()
-  build-rfc2136:
+  build-v1-12-0-rfc2136:
     runs-on: ubuntu-18.04
     env:
-      VARIANT_TAG: rfc2136
-      # VARIANT_TAG_WITH_REF: rfc2136-${GITHUB_REF}
-      VARIANT_BUILD_DIR: variants/rfc2136
+      VARIANT_TAG: v1.12.0-rfc2136
+      # VARIANT_TAG_WITH_REF: v1.12.0-rfc2136-${GITHUB_REF}
+      VARIANT_BUILD_DIR: variants/v1.12.0-rfc2136
     steps:
     - uses: actions/checkout@v1
     - name: Display system info (linux)
@@ -591,12 +591,12 @@ jobs:
     - name: Clean-up
       run: docker logout
       if: always()
-  build-route53:
+  build-v1-12-0-route53:
     runs-on: ubuntu-18.04
     env:
-      VARIANT_TAG: route53
-      # VARIANT_TAG_WITH_REF: route53-${GITHUB_REF}
-      VARIANT_BUILD_DIR: variants/route53
+      VARIANT_TAG: v1.12.0-route53
+      # VARIANT_TAG_WITH_REF: v1.12.0-route53-${GITHUB_REF}
+      VARIANT_BUILD_DIR: variants/v1.12.0-route53
     steps:
     - uses: actions/checkout@v1
     - name: Display system info (linux)
