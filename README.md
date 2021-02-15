@@ -11,7 +11,7 @@ It signs wildcards certificates for domains. For instance, the DNS Names for an 
 
 All Certbot plugins are supported: `cloudflare`, `cloudxns`, `digitalocean`, `dnsimple`, `dnsmadeeasy`, `google`, `linode`, `luadns`, `nsone`, `ovh`, `rfc2136`, `route53`
 
-## Variants
+## Tags
 
 Each variant is Certbot DNS provider plugin image.
 
