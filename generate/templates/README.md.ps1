@@ -108,7 +108,11 @@ This example signs 2 wildcard certificates, one certificate for `example.com`, a
 1. `example.com`, `*.example.com`
 2. `ns.example.com`, `*.ns.example.com`
 
-```sh
+
+'@
+
+$content += @"
+``````sh
 docker service create --name certbot-dns-cron \
     -e STAGING=1 \
     -e 'DOMAINS=example.com;ns.example.com' \
@@ -119,10 +123,14 @@ docker service create --name certbot-dns-cron \
     --mount type=bind,source=/var/run/certbot_dns_cloudflare_credentials.ini,target=/etc/letsencrypt/certbot_dns_cloudflare_credentials.ini,readonly \
     --mount type=bind,source=/path/to/data/certs/,target=/certs \
     --mount type=bind,source=/path/to/data/letsencrypt,target=/etc/letsencrypt \
-	--replicas=1 \
-	theohbrothers/certbot-dns-cron:cloudflare
-```
+    --replicas=1 \
+    theohbrothers/docker-certbot-dns-cron:$( $VARIANTS[0]['tag'] )
+``````
 
+
+"@
+
+$content += @'
 Contents of secret `certbot_dns_cloudflare_credentials.ini`
 ```ini
 # Cloudflare API credentials used by Certbot
@@ -139,7 +147,11 @@ This example signs 2 wildcard certificates, one certificate for `example.com`, a
 
 LetsEncrypt expiry notification emails will be sent to: `admin@example.com`
 
-```sh
+
+'@
+
+$content += @"
+``````sh
 docker service create --name certbot-dns-cron \
     -e STAGING=1 \
     --secret certbot_domains.txt \
@@ -149,10 +161,14 @@ docker service create --name certbot-dns-cron \
     -e PLUGIN_DNS_PROPAGATION_SECONDS=10 \
     --mount type=bind,source=/path/to/data/certs/,target=/certs \
     --mount type=bind,source=/path/to/data/letsencrypt,target=/etc/letsencrypt \
-	--replicas=1 \
-	theohbrothers/certbot-dns-cron:cloudflare
-```
+    --replicas=1 \
+    theohbrothers/docker-certbot-dns-cron:$( $VARIANTS[0]['tag'] )
+``````
 
+
+"@
+
+$content += @'
 Contents of secret `certbot_dns_cloudflare_credentials.ini`
 
 ```ini
@@ -179,7 +195,11 @@ This example will sign, deploy certs, reload a target container (requires mounti
 
 LetsEncrypt expiry notification emails will be sent to: `admin@example.com`
 
-```sh
+
+'@
+
+$content += @"
+``````sh
 docker service create --name certbot-dns-cron \
     -e STAGING=1 \
     -e PLUGIN_DNS_PROVIDER=cloudflare \
@@ -204,10 +224,14 @@ docker service create --name certbot-dns-cron \
     --mount type=bind,source=/path/to/data/certs/,target=/certs \
     --mount type=bind,source=/path/to/data/letsencrypt,target=/etc/letsencrypt \
     --mount type=bind,source=/var/run/docker.sock,target=/tmp/docker.sock \
-	--replicas=1 \
-	leojnathanoh/certbot-dns-cron:cloudflare
-```
+    --replicas=1 \
+    theohbrothers/docker-certbot-dns-cron:$( $VARIANTS[0]['tag'] )
+``````
 
+
+"@
+
+$content += @'
 Contents of secret `certbot_domains.txt`
 
 ```
