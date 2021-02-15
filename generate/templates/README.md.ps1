@@ -116,7 +116,6 @@ $content += @"
 docker service create --name certbot-dns-cron \
     -e STAGING=1 \
     -e 'DOMAINS=example.com;ns.example.com' \
-    -e PLUGIN_DNS_CREDENTIALS_FILE=
     -e PLUGIN_DNS_PROVIDER=cloudflare \
     -e PLUGIN_DNS_CREDENTIALS_FILE=/etc/letsencrypt/certbot_dns_cloudflare_credentials.ini \
     -e PLUGIN_DNS_PROPAGATION_SECONDS=10 \
