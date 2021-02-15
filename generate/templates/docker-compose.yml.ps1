@@ -3,7 +3,7 @@ version: '3.3'
 services:
 
   certbot:
-    image: leojonathanoh/docker-certbot-dns-cron:$( $VARIANT['tag'] )
+    image: theohbrothers/docker-certbot-dns-cron:$( $VARIANT['tag'] )
     environment:
       ###########
       # Certbot #

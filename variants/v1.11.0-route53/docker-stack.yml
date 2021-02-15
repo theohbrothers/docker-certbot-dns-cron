@@ -2,7 +2,7 @@ version: '3.3'
 services:
 
   certbot:
-    image: leojonathanoh/docker-certbot-dns-cron:v1.11.0-route53
+    image: theohbrothers/docker-certbot-dns-cron:v1.11.0-route53
     environment:
       ###########
       # Certbot #
