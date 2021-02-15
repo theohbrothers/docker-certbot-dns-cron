@@ -1,7 +1,7 @@
 # Dockerfile: https://hub.docker.com/r/certbot/dns-/
 FROM certbot/dns-linode:v1.12.0
 
-MAINTAINER The Oh Brothers
+LABEL maintainer="The Oh Brothers"
 
 COPY app /app
 RUN chown -R root:root /app

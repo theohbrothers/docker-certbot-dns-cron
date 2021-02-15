@@ -2,7 +2,7 @@ version: '3.3'
 services:
 
   certbot:
-    image: leojonathanoh/docker-certbot-dns-cron:v1.12.0-dnsmadeeasy
+    image: theohbrothers/docker-certbot-dns-cron:v1.12.0-dnsmadeeasy
     environment:
       ###########
       # Certbot #

@@ -1,9 +1,9 @@
 # docker-certbot-dns-cron
 
-[![github-actions](https://github.com/leojonathanoh/docker-certbot-dns-cron/workflows/ci-master-pr/badge.svg)](https://github.com/leojonathanoh/docker-certbot-dns-cron/actions)
-[![github-tag](https://img.shields.io/github/tag/leojonathanoh/docker-certbot-dns-cron)](https://github.com/leojonathanoh/docker-certbot-dns-cron/releases/)
-[![docker-image-size](https://img.shields.io/microbadger/image-size/leojonathanoh/docker-certbot-dns-cron/latest)](https://hub.docker.com/r/leojonathanoh/docker-certbot-dns-cron)
-[![docker-image-layers](https://img.shields.io/microbadger/layers/leojonathanoh/docker-certbot-dns-cron/latest)](https://hub.docker.com/r/leojonathanoh/docker-certbot-dns-cron)
+[![github-actions](https://github.com/theohbrothers/docker-certbot-dns-cron/workflows/ci-master-pr/badge.svg)](https://github.com/theohbrothers/docker-certbot-dns-cron/actions)
+[![github-tag](https://img.shields.io/github/tag/theohbrothers/docker-certbot-dns-cron)](https://github.com/theohbrothers/docker-certbot-dns-cron/releases/)
+[![docker-image-size](https://img.shields.io/microbadger/image-size/theohbrothers/docker-certbot-dns-cron/latest)](https://hub.docker.com/r/theohbrothers/docker-certbot-dns-cron)
+[![docker-image-layers](https://img.shields.io/microbadger/layers/theohbrothers/docker-certbot-dns-cron/latest)](https://hub.docker.com/r/theohbrothers/docker-certbot-dns-cron)
 
 Dockerized [Certbot with DNS Plugins](https://certbot.eff.org/docs/using.html#dns-plugins), based on [official certbot docker images](https://hub.docker.com/u/certbot), with cron, deploy, email alert capabilities.
 
@@ -137,15 +137,14 @@ This example signs 2 wildcard certificates, one certificate for `example.com`, a
 docker service create --name certbot-dns-cron \
     -e STAGING=1 \
     -e 'DOMAINS=example.com;ns.example.com' \
-    -e PLUGIN_DNS_CREDENTIALS_FILE=
     -e PLUGIN_DNS_PROVIDER=cloudflare \
     -e PLUGIN_DNS_CREDENTIALS_FILE=/etc/letsencrypt/certbot_dns_cloudflare_credentials.ini \
     -e PLUGIN_DNS_PROPAGATION_SECONDS=10 \
     --mount type=bind,source=/var/run/certbot_dns_cloudflare_credentials.ini,target=/etc/letsencrypt/certbot_dns_cloudflare_credentials.ini,readonly \
     --mount type=bind,source=/path/to/data/certs/,target=/certs \
     --mount type=bind,source=/path/to/data/letsencrypt,target=/etc/letsencrypt \
-	--replicas=1 \
-	leojonathanoh/certbot-dns-cron:cloudflare
+    --replicas=1 \
+    theohbrothers/docker-certbot-dns-cron:v1.12.0-cloudflare
 ```
 
 Contents of secret `certbot_dns_cloudflare_credentials.ini`
@@ -174,8 +173,8 @@ docker service create --name certbot-dns-cron \
     -e PLUGIN_DNS_PROPAGATION_SECONDS=10 \
     --mount type=bind,source=/path/to/data/certs/,target=/certs \
     --mount type=bind,source=/path/to/data/letsencrypt,target=/etc/letsencrypt \
-	--replicas=1 \
-	leojonathanoh/certbot-dns-cron:cloudflare
+    --replicas=1 \
+    theohbrothers/docker-certbot-dns-cron:v1.12.0-cloudflare
 ```
 
 Contents of secret `certbot_dns_cloudflare_credentials.ini`
@@ -229,8 +228,8 @@ docker service create --name certbot-dns-cron \
     --mount type=bind,source=/path/to/data/certs/,target=/certs \
     --mount type=bind,source=/path/to/data/letsencrypt,target=/etc/letsencrypt \
     --mount type=bind,source=/var/run/docker.sock,target=/tmp/docker.sock \
-	--replicas=1 \
-	leojnathanoh/certbot-dns-cron:cloudflare
+    --replicas=1 \
+    theohbrothers/docker-certbot-dns-cron:v1.12.0-cloudflare
 ```
 
 Contents of secret `certbot_domains.txt`
