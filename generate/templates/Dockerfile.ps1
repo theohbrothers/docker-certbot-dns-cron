@@ -2,7 +2,7 @@
 # Dockerfile: https://hub.docker.com/r/certbot/dns-$( $VARIANT['package'] )/
 FROM certbot/dns-$( $VARIANT['_metadata']['package'] ):$( $VARIANT['_metadata']['package_version'] )
 
-MAINTAINER The Oh Brothers
+LABEL maintainer="The Oh Brothers"
 
 COPY app /app
 RUN chown -R root:root /app
