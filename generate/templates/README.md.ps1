@@ -123,7 +123,7 @@ docker service create --name certbot-dns-cron \
     --mount type=bind,source=/path/to/data/certs/,target=/certs \
     --mount type=bind,source=/path/to/data/letsencrypt,target=/etc/letsencrypt \
     --replicas=1 \
-    theohbrothers/docker-certbot-dns-cron:$( $VARIANTS[0]['tag'] )
+    theohbrothers/docker-certbot-dns-cron:$( $VARIANTS | ? { $_['tag_as_latest'] } | Select -First 1 | % { $_['tag'] } )
 ``````
 
 
@@ -161,7 +161,7 @@ docker service create --name certbot-dns-cron \
     --mount type=bind,source=/path/to/data/certs/,target=/certs \
     --mount type=bind,source=/path/to/data/letsencrypt,target=/etc/letsencrypt \
     --replicas=1 \
-    theohbrothers/docker-certbot-dns-cron:$( $VARIANTS[0]['tag'] )
+    theohbrothers/docker-certbot-dns-cron:$( $VARIANTS | ? { $_['tag_as_latest'] } | Select -First 1 | % { $_['tag'] } )
 ``````
 
 
@@ -224,7 +224,7 @@ docker service create --name certbot-dns-cron \
     --mount type=bind,source=/path/to/data/letsencrypt,target=/etc/letsencrypt \
     --mount type=bind,source=/var/run/docker.sock,target=/tmp/docker.sock \
     --replicas=1 \
-    theohbrothers/docker-certbot-dns-cron:$( $VARIANTS[0]['tag'] )
+    theohbrothers/docker-certbot-dns-cron:$( $VARIANTS | ? { $_['tag_as_latest'] } | Select -First 1 | % { $_['tag'] } )
 ``````
 
 
