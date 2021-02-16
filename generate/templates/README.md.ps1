@@ -3,8 +3,7 @@ $content = @'
 
 [![github-actions](https://github.com/theohbrothers/docker-certbot-dns-cron/workflows/ci-master-pr/badge.svg)](https://github.com/theohbrothers/docker-certbot-dns-cron/actions)
 [![github-tag](https://img.shields.io/github/tag/theohbrothers/docker-certbot-dns-cron)](https://github.com/theohbrothers/docker-certbot-dns-cron/releases/)
-[![docker-image-size](https://img.shields.io/microbadger/image-size/theohbrothers/docker-certbot-dns-cron/latest)](https://hub.docker.com/r/theohbrothers/docker-certbot-dns-cron)
-[![docker-image-layers](https://img.shields.io/microbadger/layers/theohbrothers/docker-certbot-dns-cron/latest)](https://hub.docker.com/r/theohbrothers/docker-certbot-dns-cron)
+[![docker-image-size](https://img.shields.io/docker/image-size/theohbrothers/docker-certbot-dns-cron/latest)](https://hub.docker.com/r/theohbrothers/docker-certbot-dns-cron)
 
 Dockerized [Certbot with DNS Plugins](https://certbot.eff.org/docs/using.html#dns-plugins), based on [official certbot docker images](https://hub.docker.com/u/certbot), with cron, deploy, email alert capabilities.
 
