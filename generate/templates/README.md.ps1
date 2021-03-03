@@ -313,6 +313,14 @@ docker exec -it "$container_name_or_id" sh -c '/app/scripts/signcert-deploy-send
 docker exec -it "$container_name_or_id" sh -c '/app/scripts/signcert-deploy-sendmail.sh --force example.com example2.com example3.com'
 ```
 
+### Manually deploy a signed certificate
+
+This can either be done by using the provided script `deploy.sh`
+
+```sh
+docker exec -it "$container_name_or_id" sh -c '/app/scripts/deploy.sh example.com'
+```
+
 ### Manually remove a certificate
 
 This can either be done by using the provided script `removecert.sh`, or manually deleting the domain folder in the `letsencrypt` data folder. For `example.com`, delete the folder named `example.com`
