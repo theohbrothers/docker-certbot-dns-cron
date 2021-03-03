@@ -5,6 +5,17 @@
 cd "$( realpath $(dirname "$0") )"
 source ./init.sh
 
+if [ $# -gt 0 ]; then
+    # Any remaining arguments will be used as domains
+    DOMAINS=$@
+    output "Using arguments as domains: $DOMAINS"
+else
+    output "Using environment variable \$DOMAINS as domains: $DOMAINS"
+fi
+
+# Stop here if no domains were given as arguments
+[ -z "$DOMAINS" ] && error 'Domain(s) not provided.' && exit 1
+
 err=
 for domain in $DOMAINS
 do
