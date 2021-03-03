@@ -43,9 +43,9 @@ do
             # 2. Deploy certs to nginx and docker-gen
             output "Deploying $domain signed cert and key to /certs"
             key="$LETSENCRYPT_DIR/live/$domain/privkey.pem"
-            dest_key="/certs/$domain.crt"
+            dest_key="/certs/$domain.key"
             cert="$LETSENCRYPT_DIR/live/$domain/cert.pem"
-            dest_cert="/certs/$domain.key"
+            dest_cert="/certs/$domain.crt"
             cp "$key" "$dest_key" && chown root:root "$dest_key" && chmod 440 "$dest_key" && cp "$cert" "$dest_cert" && chown root:root "$dest_cert" && chmod 440 "$dest_cert"
             [ $? = 0 ] && success_deploycert=1 || success_deploycert=
 
