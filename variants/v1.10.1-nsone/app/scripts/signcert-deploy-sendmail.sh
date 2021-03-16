@@ -46,8 +46,24 @@ do
             dest_key="/certs/$domain.key"
             cert="$LETSENCRYPT_DIR/live/$domain/cert.pem"
             dest_cert="/certs/$domain.crt"
-            cp "$key" "$dest_key" && chown root:root "$dest_key" && chmod 440 "$dest_key" && cp "$cert" "$dest_cert" && chown root:root "$dest_cert" && chmod 440 "$dest_cert"
-            [ $? = 0 ] && success_deploycert=1 || success_deploycert=
+            fullchain_cert="$LETSENCRYPT_DIR/live/$domain/fullchain.pem"
+            dest_fullchain="/certs/$domain.fullchain.pem"
+            chain_cert="$LETSENCRYPT_DIR/live/$domain/chain.pem"
+            dest_chain="/certs/$domain.chain.pem"
+            echo "Copying key $key to $dest_key."
+            cp "$key" "$dest_key" && chown root:root "$dest_key" && chmod 440 "$dest_key"
+            [ ! $? = 0 ] && err=1
+            echo "Copying cert $cert to $dest_cert."
+            cp "$cert" "$dest_cert" && chown root:root "$dest_cert" && chmod 440 "$dest_cert"
+            [ ! $? = 0 ] && err=1
+            echo "Copying fullchain $fullchain_cert to $dest_fullchain."
+            cp "$fullchain_cert" "$dest_fullchain" && chown root:root "$dest_fullchain" && chmod 440 "$dest_fullchain"
+            [ ! $? = 0 ] && err=1
+            echo "Copying chain $chain_cert to $dest_chain."
+            cp "$chain_cert" "$dest_chain" && chown root:root "$dest_chain" && chmod 440 "$dest_chain"
+            [ ! $? = 0 ] && err=1
+
+            [ -z "$err" ] && success_deploycert=1 || success_deploycert=
 
             # 3. Reload target container (e.g. docker-gen)
             if [ -n "$success_deploycert" ]; then
