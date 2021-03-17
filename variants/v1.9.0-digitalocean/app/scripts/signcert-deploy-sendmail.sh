@@ -32,59 +32,49 @@ num_skipped=0
 output "Will sign certs for $num_domains domains"
 for domain in $DOMAINS
 do
-    # 1. Sign cert
-    signcert "$domain" "$OPT_FORCE_RENEWAL" | tee /tmp/status.log
-    status=$( cat /tmp/status.log )
-    [ -n "$( echo "$status" | grep 'Certificate not yet due for renewal' )" ] && output "Certificate for domain $domain not yet due for renewal." && num_skipped=$( echo `expr $num_skipped + 1` ) && continue
-    [ -n "$( echo "$status" | grep 'Congratulations! Your certificate and chain have been saved' )" ] && output "Certificate for domain $domain was signed." && success_signcert=1 || success_signcert=
+    output "Processing domain: $domain"
 
-    if [ -n "$success_signcert" ]; then
-        if [ -n "$DEPLOY_CERTS" ]; then
-            # 2. Deploy certs to nginx and docker-gen
-            output "Deploying $domain signed cert and key to /certs"
-            key="$LETSENCRYPT_DIR/live/$domain/privkey.pem"
-            dest_key="/certs/$domain.key"
-            cert="$LETSENCRYPT_DIR/live/$domain/cert.pem"
-            dest_cert="/certs/$domain.crt"
-            cp "$key" "$dest_key" && chown root:root "$dest_key" && chmod 440 "$dest_key" && cp "$cert" "$dest_cert" && chown root:root "$dest_cert" && chmod 440 "$dest_cert"
-            [ $? = 0 ] && success_deploycert=1 || success_deploycert=
+    # 1. certificate signing
+    if [ -n "$domain" ]; then
+        output "Performing certificate signing stage"
+        status_file="/tmp/status-$( date +%s ).log"
+        signcert "$domain" "$OPT_FORCE_RENEWAL" | tee "$status_file"
+        status=$( cat "$status_file" )
+        skipped=
+        success_signcert=
+        echo "$status" | grep 'Certificate not yet due for renewal' > /dev/null 2>&1 && output "Certificate for domain $domain not yet due for renewal." && skipped=1 && num_skipped=$( echo `expr $num_skipped + 1` ) && continue
+        echo "$status" | grep 'Congratulations! Your certificate and chain have been saved' > /dev/null 2>&1 && output "Certificate for domain $domain was signed." && success_signcert=1 || success_signcert=
 
-            # 3. Reload target container (e.g. docker-gen)
-            if [ -n "$success_deploycert" ]; then
-                if [ -n "$TARGET_CONTAINER_NAME" ]; then
-                    # Ubuntu: nc -U /tmp/docker.sock
-                    # Alpine: nc local:/tmp/docker.sock
-                    # Get container name from env var, escaping regex special chars. Typically not needed, but needed only for complex names
-                    target_container_name_regex_escaped=$(     [ -n "$TARGET_CONTAINER_NAME" ] && echo "$TARGET_CONTAINER_NAME" | sed 's/\([(){}+*?.^$<>=|]\)/\\\1/g' | sed 's/\(\[\)/\\\1/g' | sed 's/\(\]\)/\\\1/g'     ||     echo "docker-gen"      )
-                    sed_capture=$( cat - <<EOF
-s/.*"Id":"([0-9a-f]+)","Names":\["\/$target_container_name_regex_escaped[^"]*"\].*/\1/g
-EOF
-)
-                    target_container_id=$( echo -e "GET /containers/json HTTP/1.0\r\n" | nc local:/tmp/docker.sock | sed -r "$sed_capture" | grep -E '^[0-9a-f]+$' )
-                    if [ -n "$target_container_id" ]; then
-                        occurances=$( echo "$target_container_id" | wc -l )
-                        signal="SIGHUP"
-                        output "Reloading target container $TARGET_CONTAINER_NAME of id: $target_container_id with signal $signal"
-                        echo -e "POST /containers/$target_container_id/kill?signal=$signal HTTP/1.0\r\n" | nc local:/tmp/docker.sock >/dev/null
-                        [ $? = 0 ] && success_reload_container=1 || success_reload_container=
-                    else
-                        error "Cannot reload target container $TARGET_CONTAINER_NAME. Reason: failed to get container id!"
-                    fi
-
-                else
-                    output "Not reloading target container"
-                fi
-            fi
-
+        # Generate report
+        if [ -n "$skipped" ]; then
+            report="$report\nSign cert for $domain skipped"
         else
-            output "Not deploy cert and key"
+            [ -n "$success_signcert" ] && report="$report\nSign cert for $domain successful" || report="$report\nSign cert for $domain failed"
         fi
+        rm -rf "$status_file"
     fi
 
-    # Generate report
-    [ -n "$success_signcert" ] && report="$report\nSign cert for $domain successful" || report="$report\nSign cert for $domain failed"
-    [ -n "$DEPLOY_CERTS" ] && [ -n "$success_deploycert" ] && report="$report\nDeploy cert for $domain successful" || report="$report\nDeploy certs for $domain failed"
-    [ -n "$TARGET_CONTAINER_NAME" ] && [ -n "$success_reload_container" ] && report="$report\nReload target container successful" || report="$report\nReload target container failed"
+    # 2. deploy
+    if [ -n "$DEPLOY_CERTS" ]; then
+        output "Performing deploy stage"
+        deploycert "$domain"
+
+        # Generate report
+        [ $? = 0 ] && report="$report\nDeploy cert for $domain successful" || report="$report\nDeploy certs for $domain failed"
+    else
+        output "Skipping deploy stage"
+    fi
+
+    # 3. reload
+    if [ -n "$TARGET_CONTAINER_NAME" ]; then
+        output "Performing reload stage"
+        sendsignal "$TARGET_CONTAINER_NAME" "SIGHUP"
+
+        # Generate report
+        [ $? = 0 ] && report="$report\nReload target container successful" || report="$report\nReload target container failed"
+    else
+        output "Skipping reload stage"
+    fi
 
 done
 
@@ -95,7 +85,7 @@ report="$report_title\n\nCertbot automation summary report on $( date '+%Y-%m-%d
 # Skip sending email if all certs were not due
 [ "$num_domains" = "$num_skipped" ] && output "Nothing to do" && EMAIL_REPORT= && report="$report\nAll certificates not due for renewal."
 
-# 4. Send email of report
+# 4. email report
 if [ -n "$EMAIL_REPORT" ];  then
     if [ -n "$EMAIL_DISABLED" ]; then
         report="$report\nCannot send email due to missing variables"

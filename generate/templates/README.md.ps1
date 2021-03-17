@@ -247,7 +247,7 @@ Environment variables are used to configure various stages of the automation pro
 
 | Name | Default value | Description |
 |:-------:|:---------------:|:---------:|
-| `DEPLOY_CERTS` | `""` | Whether to deploy the sign cert and key. This copies `/etc/letsencrypt/live/<domain>/privkey.pem` to `/certs/<domain>.key`, and `/etc/letsencrypt/live/<domain>/cert.pem` to `/certs/<domain>.crt`. Omit environment variable to disable deploy
+| `DEPLOY_CERTS` | `""` | Whether to deploy the signed cert, key, fullchain cert, and chain cert. This copies `/etc/letsencrypt/live/<domain>/privkey.pem` to `/certs/<domain>.key`, `/etc/letsencrypt/live/<domain>/cert.pem` to `/certs/<domain>.crt`, `/etc/letsencrypt/live/<domain>/fullchain.pem` to `/certs/<domain>.fullchain.pem`, and `/etc/letsencrypt/live/<domain/chain.pem` to `/certs/<domain>.chain.pem`. Omit environment variable to disable deploy
 
 ### 3. Reload stage
 
@@ -343,7 +343,7 @@ Assuming you passed in the necessary environment variables, renewing certs would
 
 ### Deploy stage
 
-The script copies each successfully signed domain certificate / key to the folder `/certs`.
+The script copies each successfully signed domain certificate, key, full chain, and chain certificates to the folder `/certs`.
 
 To disable this stage, omit the environment variable `DEPLOY_CERTS`.
 

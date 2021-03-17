@@ -2,9 +2,10 @@
 
 set -a
 
+IN_SCRIPT=1
+
 BASE_DIR=$( realpath $(dirname "$0") )
 cd "$BASE_DIR"
-source vars.sh
 source functions.sh
 
 LETSENCRYPT_DIR=/etc/letsencrypt
