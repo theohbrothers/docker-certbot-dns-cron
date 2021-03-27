@@ -21,7 +21,7 @@ services:
       - DOMAIN_ADMIN_EMAIL_LOCALPART=admin
 
       # Certbot DNS Plugin
-      - PLUGIN_DNS_PROVIDER=v1.12.0-dnsmadeeasy
+      - PLUGIN_DNS_PROVIDER=dnsmadeeasy
       - PLUGIN_DNS_CREDENTIALS_FILE=/run/secrets/certbot_dns_dnsmadeeasy_credentials.ini
       - PLUGIN_DNS_PROPAGATION_SECONDS=10
 
