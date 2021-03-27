@@ -31,7 +31,7 @@ $( if ( $PASS_VARIABLES['secret'] ) {
       - DOMAIN_ADMIN_EMAIL_LOCALPART=admin
 
       # Certbot DNS Plugin
-      - PLUGIN_DNS_PROVIDER=$( $VARIANT['tag'] )
+      - PLUGIN_DNS_PROVIDER=$( $VARIANT['_metadata']['package'] )
       - PLUGIN_DNS_CREDENTIALS_FILE=$( if ( $PASS_VARIABLES['secret'] ) { "/run/secrets/certbot_dns_$( $VARIANT['_metadata']['package'] )_credentials.ini" } else { "/etc/letsencrypt/certbot_dns_$( $VARIANT['_metadata']['package'] )_credentials.ini" } )
       - PLUGIN_DNS_PROPAGATION_SECONDS=10
 

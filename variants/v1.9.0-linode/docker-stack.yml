@@ -21,7 +21,7 @@ services:
       - DOMAIN_ADMIN_EMAIL_LOCALPART=admin
 
       # Certbot DNS Plugin
-      - PLUGIN_DNS_PROVIDER=v1.9.0-linode
+      - PLUGIN_DNS_PROVIDER=linode
       - PLUGIN_DNS_CREDENTIALS_FILE=/run/secrets/certbot_dns_linode_credentials.ini
       - PLUGIN_DNS_PROPAGATION_SECONDS=10
 
