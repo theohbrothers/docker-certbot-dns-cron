@@ -1,4 +1,4 @@
-$content = @'
+@'
 # docker-certbot-dns-cron
 
 [![github-actions](https://github.com/theohbrothers/docker-certbot-dns-cron/workflows/ci-master-pr/badge.svg)](https://github.com/theohbrothers/docker-certbot-dns-cron/actions)
@@ -14,7 +14,7 @@ All Certbot plugins are supported: `cloudflare`, `cloudxns`, `digitalocean`, `dn
 
 '@
 
-$content += @"
+@"
 ## Tags
 
 Each variant is Certbot DNS provider plugin image.
@@ -39,7 +39,7 @@ $(
 
 "@
 
-$content += @'
+@'
 ## Usage
 
 ### Example: Not using Swarm Secrets
@@ -52,7 +52,7 @@ This example signs 2 wildcard certificates, one certificate for `example.com`, a
 
 '@
 
-$content += @"
+@"
 ``````sh
 docker service create --name certbot-dns-cron \
     -e STAGING=1 \
@@ -70,7 +70,7 @@ docker service create --name certbot-dns-cron \
 
 "@
 
-$content += @'
+@'
 Contents of secret `certbot_dns_cloudflare_credentials.ini`
 
 ```ini
@@ -91,7 +91,7 @@ LetsEncrypt expiry notification emails will be sent to: `admin@example.com`
 
 '@
 
-$content += @"
+@"
 ``````sh
 docker service create --name certbot-dns-cron \
     -e STAGING=1 \
@@ -109,7 +109,7 @@ docker service create --name certbot-dns-cron \
 
 "@
 
-$content += @'
+@'
 Contents of secret `certbot_dns_cloudflare_credentials.ini`
 
 ```ini
