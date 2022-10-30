@@ -5,11 +5,25 @@
 [![github-release](https://img.shields.io/github/v/release/theohbrothers/docker-certbot-dns-cron?style=flat-square)](https://github.com/theohbrothers/docker-certbot-dns-cron/releases/)
 [![docker-image-size](https://img.shields.io/docker/image-size/theohbrothers/docker-certbot-dns-cron/latest)](https://hub.docker.com/r/theohbrothers/docker-certbot-dns-cron)
 
-Dockerized [Certbot with DNS Plugins](https://certbot.eff.org/docs/using.html#dns-plugins), based on [official certbot docker images](https://hub.docker.com/u/certbot), with cron, deploy, email alert capabilities.
+Dockerized [certbot](https://github.com/certbot/certbot) with [DNS Plugins](https://certbot.eff.org/docs/using.html#dns-plugins), based on [official certbot docker images](https://hub.docker.com/u/certbot), with cron, deploy, email alert capabilities.
 
 It signs wildcards certificates for domains. For instance, the DNS Names for an obtained certificate for `example.com` would be: `example.com, *.example.com`.
 
 All Certbot plugins are supported: `cloudflare`, `cloudxns`, `digitalocean`, `dnsimple`, `dnsmadeeasy`, `google`, `linode`, `luadns`, `nsone`, `ovh`, `rfc2136`, `route53`
+
+## Deprecation notice
+
+The present application is a 4-step tool for automating ACME certificate renewal using `certbox` for a container orchestrator like `docker` standalone or `docker` `swarm`.
+
+However, step `2.`, `3.`, and `4.` may be solved by using already existing tools, for instance:
+
+- Copying certs to another service can be done by sharing a volume or by some other means
+- Reloading another service by sending a signal can be done in many other ways which are more secure than doing it over `/var/run/docker.sock`
+- Notification can be done in many other ways other than email
+
+Since there only remains step `1.` to solve, there is no benefit to using this application. The `certbot` tool itself constantly evolves, and it makes no sense to maintain a wrapping entrypoint script around it.
+
+Hence, it is simpler to just use the [official certbot docker images](https://hub.docker.com/u/certbot). If a cron is needed, create a crontab in `/etc/crontabs/<user>` and run `crond`.
 
 
 '@
