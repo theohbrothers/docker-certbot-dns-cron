@@ -1,4 +1,4 @@
-# Dockerfile: https://hub.docker.com/r/certbot/dns-/
+# Dockerfile: https://hub.docker.com/r/certbot/dns-google
 FROM certbot/dns-google:v1.12.0
 
 LABEL maintainer="The Oh Brothers"

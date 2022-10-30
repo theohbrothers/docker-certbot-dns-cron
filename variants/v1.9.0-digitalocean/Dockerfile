@@ -1,4 +1,4 @@
-# Dockerfile: https://hub.docker.com/r/certbot/dns-/
+# Dockerfile: https://hub.docker.com/r/certbot/dns-digitalocean
 FROM certbot/dns-digitalocean:v1.9.0
 
 LABEL maintainer="The Oh Brothers"
