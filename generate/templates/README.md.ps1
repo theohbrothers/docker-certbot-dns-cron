@@ -2,7 +2,7 @@ $content = @'
 # docker-certbot-dns-cron
 
 [![github-actions](https://github.com/theohbrothers/docker-certbot-dns-cron/workflows/ci-master-pr/badge.svg)](https://github.com/theohbrothers/docker-certbot-dns-cron/actions)
-[![github-tag](https://img.shields.io/github/tag/theohbrothers/docker-certbot-dns-cron)](https://github.com/theohbrothers/docker-certbot-dns-cron/releases/)
+[![github-release](https://img.shields.io/github/v/release/theohbrothers/docker-certbot-dns-cron?style=flat-square)](https://github.com/theohbrothers/docker-certbot-dns-cron/releases/)
 [![docker-image-size](https://img.shields.io/docker/image-size/theohbrothers/docker-certbot-dns-cron/latest)](https://hub.docker.com/r/theohbrothers/docker-certbot-dns-cron)
 
 Dockerized [Certbot with DNS Plugins](https://certbot.eff.org/docs/using.html#dns-plugins), based on [official certbot docker images](https://hub.docker.com/u/certbot), with cron, deploy, email alert capabilities.
@@ -139,7 +139,7 @@ LetsEncrypt expiry notification emails will be sent to: `admin@example.com`
 
 '@
 
-$content += @"
+@"
 ``````sh
 docker service create --name certbot-dns-cron \
     -e STAGING=1 \
@@ -172,7 +172,7 @@ docker service create --name certbot-dns-cron \
 
 "@
 
-$content += @'
+@'
 Contents of secret `certbot_domains.txt`
 
 ```txt
@@ -280,10 +280,6 @@ Instead of specifying your email credentials in the `docker-stack.yml`, use envi
 | `SMTP_SERVER_FILE` | `/run/secrets/certbot_email_smtp_server` | SMTP server DNS / hostname / IP address. E.g. `smtp.example.com`, `1.2.3.4`
 | `SMTP_PORT_FILE` | `/run/secrets/certbot_email_smtp_port` | SMTP server port. E.g. `587`, `465`
 
-
-'@
-
-$content += @'
 ## Cron interval
 
 By default, the cron invokes the main script every hour.
@@ -372,6 +368,18 @@ Assuming all variables are set correctly, as long as one certificate is obtained
 
 To disable this stage, omit the environment variable `EMAIL_REPORT`.
 
-'@
+## Development
 
-$content
+Requires Windows `powershell` or [`pwsh`](https://github.com/PowerShell/PowerShell).
+
+```powershell
+# Install Generate-DockerImageVariants module: https://github.com/theohbrothers/Generate-DockerImageVariants
+Install-Module -Name Generate-DockerImageVariants -Repository PSGallery -Scope CurrentUser -Force -Verbose
+
+# Edit ./generate templates
+
+# Generate the variants
+Generate-DockerImageVariants .
+```
+
+'@

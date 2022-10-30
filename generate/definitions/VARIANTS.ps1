@@ -47,8 +47,6 @@ $VARIANTS = @(
                     templates = @{
                         'Dockerfile' = @{
                             common = $true
-                            #includeHeader = $true
-                            #includeFooter = $true
                             passes = @(
                                 @{
                                     variables = @{}
