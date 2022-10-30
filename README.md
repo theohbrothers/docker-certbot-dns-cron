@@ -1,3 +1,150 @@
+# docker-certbot-dns-cron
+
+[![github-actions](https://github.com/theohbrothers/docker-certbot-dns-cron/workflows/ci-master-pr/badge.svg)](https://github.com/theohbrothers/docker-certbot-dns-cron/actions)
+[![github-release](https://img.shields.io/github/v/release/theohbrothers/docker-certbot-dns-cron?style=flat-square)](https://github.com/theohbrothers/docker-certbot-dns-cron/releases/)
+[![docker-image-size](https://img.shields.io/docker/image-size/theohbrothers/docker-certbot-dns-cron/latest)](https://hub.docker.com/r/theohbrothers/docker-certbot-dns-cron)
+
+Dockerized [Certbot with DNS Plugins](https://certbot.eff.org/docs/using.html#dns-plugins), based on [official certbot docker images](https://hub.docker.com/u/certbot), with cron, deploy, email alert capabilities.
+
+It signs wildcards certificates for domains. For instance, the DNS Names for an obtained certificate for `example.com` would be: `example.com, *.example.com`.
+
+All Certbot plugins are supported: `cloudflare`, `cloudxns`, `digitalocean`, `dnsimple`, `dnsmadeeasy`, `google`, `linode`, `luadns`, `nsone`, `ovh`, `rfc2136`, `route53`
+
+## Tags
+
+Each variant is Certbot DNS provider plugin image.
+
+| Tag | Plugin name | Dockerfile Build Context  |
+|:-------:|:---------:|:---------:
+| `:v1.12.0-cloudflare`, `:latest` | [certbot-dns-cloudflare](https://certbot-dns-cloudflare.readthedocs.io) | [View](variants/v1.12.0-cloudflare )
+| `:v1.11.0-cloudflare` | [certbot-dns-cloudflare](https://certbot-dns-cloudflare.readthedocs.io) | [View](variants/v1.11.0-cloudflare )
+| `:v1.10.1-cloudflare` | [certbot-dns-cloudflare](https://certbot-dns-cloudflare.readthedocs.io) | [View](variants/v1.10.1-cloudflare )
+| `:v1.9.0-cloudflare` | [certbot-dns-cloudflare](https://certbot-dns-cloudflare.readthedocs.io) | [View](variants/v1.9.0-cloudflare )
+| `:v1.12.0-cloudxns` | [certbot-dns-cloudxns](https://certbot-dns-cloudxns.readthedocs.io) | [View](variants/v1.12.0-cloudxns )
+| `:v1.11.0-cloudxns` | [certbot-dns-cloudxns](https://certbot-dns-cloudxns.readthedocs.io) | [View](variants/v1.11.0-cloudxns )
+| `:v1.10.1-cloudxns` | [certbot-dns-cloudxns](https://certbot-dns-cloudxns.readthedocs.io) | [View](variants/v1.10.1-cloudxns )
+| `:v1.9.0-cloudxns` | [certbot-dns-cloudxns](https://certbot-dns-cloudxns.readthedocs.io) | [View](variants/v1.9.0-cloudxns )
+| `:v1.12.0-digitalocean` | [certbot-dns-digitalocean](https://certbot-dns-digitalocean.readthedocs.io) | [View](variants/v1.12.0-digitalocean )
+| `:v1.11.0-digitalocean` | [certbot-dns-digitalocean](https://certbot-dns-digitalocean.readthedocs.io) | [View](variants/v1.11.0-digitalocean )
+| `:v1.10.1-digitalocean` | [certbot-dns-digitalocean](https://certbot-dns-digitalocean.readthedocs.io) | [View](variants/v1.10.1-digitalocean )
+| `:v1.9.0-digitalocean` | [certbot-dns-digitalocean](https://certbot-dns-digitalocean.readthedocs.io) | [View](variants/v1.9.0-digitalocean )
+| `:v1.12.0-dnsimple` | [certbot-dns-dnsimple](https://certbot-dns-dnsimple.readthedocs.io) | [View](variants/v1.12.0-dnsimple )
+| `:v1.11.0-dnsimple` | [certbot-dns-dnsimple](https://certbot-dns-dnsimple.readthedocs.io) | [View](variants/v1.11.0-dnsimple )
+| `:v1.10.1-dnsimple` | [certbot-dns-dnsimple](https://certbot-dns-dnsimple.readthedocs.io) | [View](variants/v1.10.1-dnsimple )
+| `:v1.9.0-dnsimple` | [certbot-dns-dnsimple](https://certbot-dns-dnsimple.readthedocs.io) | [View](variants/v1.9.0-dnsimple )
+| `:v1.12.0-dnsmadeeasy` | [certbot-dns-dnsmadeeasy](https://certbot-dns-dnsmadeeasy.readthedocs.io) | [View](variants/v1.12.0-dnsmadeeasy )
+| `:v1.11.0-dnsmadeeasy` | [certbot-dns-dnsmadeeasy](https://certbot-dns-dnsmadeeasy.readthedocs.io) | [View](variants/v1.11.0-dnsmadeeasy )
+| `:v1.10.1-dnsmadeeasy` | [certbot-dns-dnsmadeeasy](https://certbot-dns-dnsmadeeasy.readthedocs.io) | [View](variants/v1.10.1-dnsmadeeasy )
+| `:v1.9.0-dnsmadeeasy` | [certbot-dns-dnsmadeeasy](https://certbot-dns-dnsmadeeasy.readthedocs.io) | [View](variants/v1.9.0-dnsmadeeasy )
+| `:v1.12.0-google` | [certbot-dns-google](https://certbot-dns-google.readthedocs.io) | [View](variants/v1.12.0-google )
+| `:v1.11.0-google` | [certbot-dns-google](https://certbot-dns-google.readthedocs.io) | [View](variants/v1.11.0-google )
+| `:v1.10.1-google` | [certbot-dns-google](https://certbot-dns-google.readthedocs.io) | [View](variants/v1.10.1-google )
+| `:v1.9.0-google` | [certbot-dns-google](https://certbot-dns-google.readthedocs.io) | [View](variants/v1.9.0-google )
+| `:v1.12.0-linode` | [certbot-dns-linode](https://certbot-dns-linode.readthedocs.io) | [View](variants/v1.12.0-linode )
+| `:v1.11.0-linode` | [certbot-dns-linode](https://certbot-dns-linode.readthedocs.io) | [View](variants/v1.11.0-linode )
+| `:v1.10.1-linode` | [certbot-dns-linode](https://certbot-dns-linode.readthedocs.io) | [View](variants/v1.10.1-linode )
+| `:v1.9.0-linode` | [certbot-dns-linode](https://certbot-dns-linode.readthedocs.io) | [View](variants/v1.9.0-linode )
+| `:v1.12.0-luadns` | [certbot-dns-luadns](https://certbot-dns-luadns.readthedocs.io) | [View](variants/v1.12.0-luadns )
+| `:v1.11.0-luadns` | [certbot-dns-luadns](https://certbot-dns-luadns.readthedocs.io) | [View](variants/v1.11.0-luadns )
+| `:v1.10.1-luadns` | [certbot-dns-luadns](https://certbot-dns-luadns.readthedocs.io) | [View](variants/v1.10.1-luadns )
+| `:v1.9.0-luadns` | [certbot-dns-luadns](https://certbot-dns-luadns.readthedocs.io) | [View](variants/v1.9.0-luadns )
+| `:v1.12.0-nsone` | [certbot-dns-nsone](https://certbot-dns-nsone.readthedocs.io) | [View](variants/v1.12.0-nsone )
+| `:v1.11.0-nsone` | [certbot-dns-nsone](https://certbot-dns-nsone.readthedocs.io) | [View](variants/v1.11.0-nsone )
+| `:v1.10.1-nsone` | [certbot-dns-nsone](https://certbot-dns-nsone.readthedocs.io) | [View](variants/v1.10.1-nsone )
+| `:v1.9.0-nsone` | [certbot-dns-nsone](https://certbot-dns-nsone.readthedocs.io) | [View](variants/v1.9.0-nsone )
+| `:v1.12.0-ovh` | [certbot-dns-ovh](https://certbot-dns-ovh.readthedocs.io) | [View](variants/v1.12.0-ovh )
+| `:v1.11.0-ovh` | [certbot-dns-ovh](https://certbot-dns-ovh.readthedocs.io) | [View](variants/v1.11.0-ovh )
+| `:v1.10.1-ovh` | [certbot-dns-ovh](https://certbot-dns-ovh.readthedocs.io) | [View](variants/v1.10.1-ovh )
+| `:v1.9.0-ovh` | [certbot-dns-ovh](https://certbot-dns-ovh.readthedocs.io) | [View](variants/v1.9.0-ovh )
+| `:v1.12.0-rfc2136` | [certbot-dns-rfc2136](https://certbot-dns-rfc2136.readthedocs.io) | [View](variants/v1.12.0-rfc2136 )
+| `:v1.11.0-rfc2136` | [certbot-dns-rfc2136](https://certbot-dns-rfc2136.readthedocs.io) | [View](variants/v1.11.0-rfc2136 )
+| `:v1.10.1-rfc2136` | [certbot-dns-rfc2136](https://certbot-dns-rfc2136.readthedocs.io) | [View](variants/v1.10.1-rfc2136 )
+| `:v1.9.0-rfc2136` | [certbot-dns-rfc2136](https://certbot-dns-rfc2136.readthedocs.io) | [View](variants/v1.9.0-rfc2136 )
+| `:v1.12.0-route53` | [certbot-dns-route53](https://certbot-dns-route53.readthedocs.io) | [View](variants/v1.12.0-route53 )
+| `:v1.11.0-route53` | [certbot-dns-route53](https://certbot-dns-route53.readthedocs.io) | [View](variants/v1.11.0-route53 )
+| `:v1.10.1-route53` | [certbot-dns-route53](https://certbot-dns-route53.readthedocs.io) | [View](variants/v1.10.1-route53 )
+| `:v1.9.0-route53` | [certbot-dns-route53](https://certbot-dns-route53.readthedocs.io) | [View](variants/v1.9.0-route53 )
+
+## Usage
+
+### Example: Not using Swarm Secrets
+
+This example signs 2 wildcard certificates, one certificate for `example.com`, and one for `ns.example.com` :
+
+1. `example.com`, `*.example.com`
+2. `ns.example.com`, `*.ns.example.com`
+
+```sh
+docker service create --name certbot-dns-cron \
+    -e STAGING=1 \
+    -e 'DOMAINS=example.com;ns.example.com' \
+    -e PLUGIN_DNS_PROVIDER=cloudflare \
+    -e PLUGIN_DNS_CREDENTIALS_FILE=/etc/letsencrypt/certbot_dns_cloudflare_credentials.ini \
+    -e PLUGIN_DNS_PROPAGATION_SECONDS=10 \
+    --mount type=bind,source=/var/run/certbot_dns_cloudflare_credentials.ini,target=/etc/letsencrypt/certbot_dns_cloudflare_credentials.ini,readonly \
+    --mount type=bind,source=/path/to/data/certs/,target=/certs \
+    --mount type=bind,source=/path/to/data/letsencrypt,target=/etc/letsencrypt \
+    --replicas=1 \
+    theohbrothers/docker-certbot-dns-cron:v1.12.0-cloudflare
+```
+
+Contents of secret `certbot_dns_cloudflare_credentials.ini`
+
+```ini
+# Cloudflare API credentials used by Certbot
+dns_cloudflare_email = cloudflare@example.com
+dns_cloudflare_api_key = 0123456789abcdef0123456789abcdef01234567
+```
+
+### Example: Using Swarm Secrets
+
+This example signs 2 wildcard certificates, one certificate for `example.com`, and one for `ns.example.com` :
+
+1. `example.com`, `*.example.com`
+2. `ns.example.com`, `*.ns.example.com`
+
+LetsEncrypt expiry notification emails will be sent to: `admin@example.com`
+
+```sh
+docker service create --name certbot-dns-cron \
+    -e STAGING=1 \
+    --secret certbot_domains.txt \
+    --secret certbot_dns_cloudflare_credentials.ini \
+    -e PLUGIN_DNS_PROVIDER=cloudflare \
+    -e PLUGIN_DNS_CREDENTIALS_FILE=/run/secrets/certbot_dns_cloudflare_credentials.ini \
+    -e PLUGIN_DNS_PROPAGATION_SECONDS=10 \
+    --mount type=bind,source=/path/to/data/certs/,target=/certs \
+    --mount type=bind,source=/path/to/data/letsencrypt,target=/etc/letsencrypt \
+    --replicas=1 \
+    theohbrothers/docker-certbot-dns-cron:v1.12.0-cloudflare
+```
+
+Contents of secret `certbot_dns_cloudflare_credentials.ini`
+
+```ini
+# Cloudflare API credentials used by Certbot
+dns_cloudflare_email = cloudflare@example.com
+dns_cloudflare_api_key = 0123456789abcdef0123456789abcdef01234567
+```
+
+Contents of secret `certbot_domains.txt`
+
+```txt
+example.com
+ns.example.com
+```
+
+### Full Example: Using Swarm Secrets
+
+This example will sign, deploy certs, reload a target container (requires mounting the `docker.sock`), and email a summary report about the success of those tasks (requires email credential secrets). Four wildcard certificates will be obtained:
+
+- `example.com`, `*.example.com`
+- `ns.example.com`, `*.ns.example.com`
+- `example2.com`, `*.example2.com`
+- `ns.example2.com`, `*.ns.example2.com`
+
+LetsEncrypt expiry notification emails will be sent to: `admin@example.com`
+
 ```sh
 docker service create --name certbot-dns-cron \
     -e STAGING=1 \
