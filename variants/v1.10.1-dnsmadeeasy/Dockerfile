@@ -1,4 +1,4 @@
-# Dockerfile: https://hub.docker.com/r/certbot/dns-/
+# Dockerfile: https://hub.docker.com/r/certbot/dns-dnsmadeeasy
 FROM certbot/dns-dnsmadeeasy:v1.10.1
 
 LABEL maintainer="The Oh Brothers"

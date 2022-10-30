@@ -1,4 +1,4 @@
-# Dockerfile: https://hub.docker.com/r/certbot/dns-/
+# Dockerfile: https://hub.docker.com/r/certbot/dns-nsone
 FROM certbot/dns-nsone:v1.11.0
 
 LABEL maintainer="The Oh Brothers"
