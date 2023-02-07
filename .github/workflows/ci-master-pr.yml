@@ -6591,7 +6591,7 @@ jobs:
 
   update-dockerhub-description:
     needs: [build-v1-12-0-cloudflare, build-v1-11-0-cloudflare, build-v1-10-1-cloudflare, build-v1-9-0-cloudflare, build-v1-12-0-cloudxns, build-v1-11-0-cloudxns, build-v1-10-1-cloudxns, build-v1-9-0-cloudxns, build-v1-12-0-digitalocean, build-v1-11-0-digitalocean, build-v1-10-1-digitalocean, build-v1-9-0-digitalocean, build-v1-12-0-dnsimple, build-v1-11-0-dnsimple, build-v1-10-1-dnsimple, build-v1-9-0-dnsimple, build-v1-12-0-dnsmadeeasy, build-v1-11-0-dnsmadeeasy, build-v1-10-1-dnsmadeeasy, build-v1-9-0-dnsmadeeasy, build-v1-12-0-google, build-v1-11-0-google, build-v1-10-1-google, build-v1-9-0-google, build-v1-12-0-linode, build-v1-11-0-linode, build-v1-10-1-linode, build-v1-9-0-linode, build-v1-12-0-luadns, build-v1-11-0-luadns, build-v1-10-1-luadns, build-v1-9-0-luadns, build-v1-12-0-nsone, build-v1-11-0-nsone, build-v1-10-1-nsone, build-v1-9-0-nsone, build-v1-12-0-ovh, build-v1-11-0-ovh, build-v1-10-1-ovh, build-v1-9-0-ovh, build-v1-12-0-rfc2136, build-v1-11-0-rfc2136, build-v1-10-1-rfc2136, build-v1-9-0-rfc2136, build-v1-12-0-route53, build-v1-11-0-route53, build-v1-10-1-route53, build-v1-9-0-route53]
-    if: github.ref == 'refs/heads/master' || startsWith(github.ref, 'refs/tags/')
+    if: github.ref == 'refs/heads/master'
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3

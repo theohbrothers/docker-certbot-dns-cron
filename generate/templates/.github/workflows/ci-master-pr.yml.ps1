@@ -226,7 +226,7 @@ if ( $_['tag_as_latest'] ) {
 
   update-dockerhub-description:
     needs: [$( $local:WORKFLOW_JOB_NAMES -join ', ' )]
-    if: github.ref == 'refs/heads/master' || startsWith(github.ref, 'refs/tags/')
+    if: github.ref == 'refs/heads/master'
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
