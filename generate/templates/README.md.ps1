@@ -39,12 +39,12 @@ $(
 ($VARIANTS | % {
     if ( $_['tag_as_latest'] ) {
 @"
-| ``:$( $_['tag'] )``, ``:latest`` | [certbot-dns-$( $_['_metadata']['package'] )](https://certbot-dns-$( $_['_metadata']['package'] ).readthedocs.io) | [View](variants/$( $_['tag'] ) )
+| ``:$( $_['tag'] )``, ``:latest`` | [certbot-dns-$( $_['_metadata']['package'] )](https://certbot-dns-$( $_['_metadata']['package'] ).readthedocs.io) | [View](variants/$( $_['tag'] )) |
 
 "@
     }else {
 @"
-| ``:$( $_['tag'] )`` | [certbot-dns-$( $_['_metadata']['package'] )](https://certbot-dns-$( $_['_metadata']['package'] ).readthedocs.io) | [View](variants/$( $_['tag'] ) )
+| ``:$( $_['tag'] )`` | [certbot-dns-$( $_['_metadata']['package'] )](https://certbot-dns-$( $_['_metadata']['package'] ).readthedocs.io) | [View](variants/$( $_['tag'] )) |
 
 "@
     }
