@@ -38,12 +38,11 @@ $VARIANTS = @(
                     package = $package
                     package_version = $package_version
                     platforms = 'linux/amd64'
+                    job_group_key = $package_version
                 }
                 tag = "v$package_version-$package"
                 # The latest cloudflare image will be tagged :latest. E.g. v1.12.0-cloudflare
                 tag_as_latest = if ($package -eq 'cloudflare' -and $package_version -eq $local:PACKAGE_VERSIONS[0]) { $true } else { $false }
-
-
                 buildContextFiles = @{
                     templates = @{
                         'Dockerfile' = @{
