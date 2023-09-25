@@ -1,6 +1,6 @@
 @"
 # Dockerfile: https://hub.docker.com/r/certbot/dns-$( $VARIANT['_metadata']['package'] )
-FROM certbot/dns-$( $VARIANT['_metadata']['package'] ):$( $VARIANT['_metadata']['package_version'] )
+FROM certbot/dns-$( $VARIANT['_metadata']['package'] ):v$( $VARIANT['_metadata']['package_version'] )
 
 LABEL maintainer="The Oh Brothers"
 

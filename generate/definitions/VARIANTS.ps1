@@ -1,5 +1,5 @@
 # Docker image variants' definitions
-$local:VARIANTS_PACKAGES = @(
+$local:PACKAGES = @(
     'cloudflare'
     'cloudxns'
     'digitalocean'
@@ -13,34 +13,35 @@ $local:VARIANTS_PACKAGES = @(
     'rfc2136'
     'route53'
 )
-$local:VARIANTS_PACKAGES_VERSIONS = @(
-    'v1.12.0'
-    'v1.11.0'
-    'v1.10.1'
-    'v1.9.0'
-    # 'v1.8.0'
-    # 'v1.7.0'
-    # 'v1.6.0'
-    # 'v1.5.0'
-    # 'v1.4.0'
-    # 'v1.4.0'
-    # 'v1.3.0'
-    # 'v1.2.0'
-    # 'v1.1.0'
-    # 'v1.0.0'
-    # 'v0.40.1'
+$local:PACKAGE_VERSIONS = @(
+    '1.12.0'
+    '1.11.0'
+    '1.10.1'
+    '1.9.0'
+    # '1.8.0'
+    # '1.7.0'
+    # '1.6.0'
+    # '1.5.0'
+    # '1.4.0'
+    # '1.4.0'
+    # '1.3.0'
+    # '1.2.0'
+    # '1.1.0'
+    # '1.0.0'
+    # '0.40.1'
 )
 $VARIANTS = @(
-    foreach ($package in $local:VARIANTS_PACKAGES) {
-        foreach ($package_version in $local:VARIANTS_PACKAGES_VERSIONS) {
+    foreach ($package in $local:PACKAGES) {
+        foreach ($package_version in $local:PACKAGE_VERSIONS) {
             @{
                 _metadata = @{
                     package = $package
                     package_version = $package_version
+                    platforms = 'linux/amd64'
                 }
-                tag = "$package_version-$package"
+                tag = "v$package_version-$package"
                 # The latest cloudflare image will be tagged :latest. E.g. v1.12.0-cloudflare
-                tag_as_latest = if ($package -eq 'cloudflare' -and $package_version -eq $local:VARIANTS_PACKAGES_VERSIONS[0]) { $true } else { $false }
+                tag_as_latest = if ($package -eq 'cloudflare' -and $package_version -eq $local:PACKAGE_VERSIONS[0]) { $true } else { $false }
 
 
                 buildContextFiles = @{
